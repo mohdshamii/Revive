@@ -1,217 +1,236 @@
-<p align="center">
-  
-#  Revive - A Machine Learnig model
+<div align="center">
+
+<img src="static/logo.png" width="120" alt="Revive Logo" />
+
+<br/>
+
+# REVIVE
+
+### Machine Learning Based Disease Prediction System
+
+<br/>
+
+![Python](https://img.shields.io/badge/Python-3.8+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/Flask-2.x-000000?style=for-the-badge&logo=flask&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Deep_Learning-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML_Models-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)
+
+<br/>
+
+*Bridging clinical intelligence and machine learning — one prediction at a time.*
 
 </div>
 
-<p align="center">
-  <img src="static/logo.png" width="200">
-</p>
+---
 
-<p align="center">
-Machine Learning Based Web Application for multiple Disease Prediction
-</p>
+## Overview
+
+**Revive** is a production-grade, machine learning powered web application capable of predicting seven distinct diseases from patient medical data. Built on Flask, it integrates both classical machine learning models and convolutional neural networks to deliver fast, accurate, and interpretable medical predictions through a clean web interface.
+
+The system was designed to reduce diagnostic friction for doctors, medical researchers, and patients by providing AI-assisted predictions based on validated medical datasets sourced from Kaggle and the UCI Machine Learning Repository.
 
 ---
 
-![Python](https://img.shields.io/badge/Language-Python-brightgreen.svg)
-![Flask](https://img.shields.io/badge/Framework-Flask-red.svg)
-![Bootstrap](https://img.shields.io/badge/Frontend-Bootstrap-purple.svg)
-![ML](https://img.shields.io/badge/MachineLearning-Model-blue.svg)
-![Deployment](https://img.shields.io/badge/Deployment-Github-yellow.svg)
+## Screenshots
+
+<div align="center">
+
+**Home**
+
+<img src="images/home.png" width="800" alt="Home Page" />
+
+<br/><br/>
+
+**Available Services**
+
+<img src="images/sevices.png" width="800" alt="Services Page" />
+
+</div>
 
 ---
 
-#  Project Overview
+## Disease Prediction Modules
 
-**Revive** is a Machine Learning powered web application that predicts multiple diseases using patient medical data.
+<div align="center">
 
-The system uses trained **Machine Learning and Deep Learning models** integrated with a **Flask web application**.
+| Disease | Model Type | Accuracy | Screenshot |
+|---|---|---|---|
+| Diabetes | Machine Learning | 98.25% | [View](#diabetes-prediction) |
+| Breast Cancer | Machine Learning | 98.25% | [View](#breast-cancer-prediction) |
+| Heart Disease | Machine Learning | 85.25% | [View](#heart-disease-prediction) |
+| Kidney Disease | Machine Learning | 99.00% | [View](#kidney-disease-prediction) |
+| Liver Disease | Machine Learning | 78.00% | [View](#liver-disease-prediction) |
+| Malaria | CNN Deep Learning | 96.00% | [View](#malaria-detection) |
+| Pneumonia | CNN Deep Learning | 95.00% | [View](#pneumonia-detection) |
 
-Users can enter medical parameters and the system will predict possible diseases based on trained datasets.
-
----
-
-#  Features
-
-✔ Multiple Disease Prediction  
-✔ Machine Learning Models  
-✔ Deep Learning Models  
-✔ User Friendly Web Interface  
-✔ Fast Prediction System  
-✔ Accurate Results  
+</div>
 
 ---
 
-#  Table of Contents
+### Diabetes Prediction
 
-- Problem Statement
-- Why This Project
-- Flow Chart
-- Directory Structure
-- Quick Start
-- Screenshots
-- Technical Details
-- Developer
-- License
+<img src="images/diabetes.png" width="800" alt="Diabetes Prediction" />
+
+A classical machine learning model trained on the PIMA Indian Diabetes dataset. Users input glucose levels, BMI, insulin, age, and other clinical markers to receive an immediate prediction.
 
 ---
 
-#  Problem Statement
+### Breast Cancer Prediction
 
-Revive can be time consuming and sometimes prone to human errors.
+<img src="images/breast_cancer.png" width="800" alt="Breast Cancer Prediction" />
 
-The objective of this project is to build a **Machine Learning based medical diagnosis system** that helps in predicting diseases early.
-
-The system allows users to input medical data which is then processed by trained models to predict possible diseases.
-
-This system helps:
-
-- Doctors
-- Medical Researchers
-- Patients
-
-to quickly identify possible diseases using AI.
+Trained on the Wisconsin Breast Cancer dataset. The model analyzes cell nucleus features extracted from digitized fine needle aspirate images to classify tumors as malignant or benign.
 
 ---
 
-#  Why This Project
+### Heart Disease Prediction
 
-Humans can make mistakes during diagnosis due to fatigue or workload.
+<img src="images/heart.png" width="800" alt="Heart Disease Prediction" />
 
-Machine Learning systems analyze large datasets and identify patterns which help in improving prediction accuracy.
-
-Advantages of this project:
-
-• Early disease detection  
-• Reduced diagnostic errors  
-• Faster analysis  
-• Multiple disease predictions  
-
-Datasets were collected from **Kaggle** and **UCI Machine Learning Repository**.
+A classifier trained on the Cleveland Heart Disease dataset from UCI. Accepts 13 clinical attributes including age, chest pain type, resting blood pressure, and electrocardiographic results.
 
 ---
 
-#  Flow Chart
+### Kidney Disease Prediction
 
-Start
+<img src="images/kidney.png" width="800" alt="Kidney Disease Prediction" />
 
-  │
-  ▼
-  
-User Opens Website
+Trained on the Chronic Kidney Disease dataset. Processes 24 medical features including blood urea, serum creatinine, haemoglobin, and packed cell volume to predict kidney disease presence.
 
-  │
-  ▼
-  
-Flask Server Starts (app.py)
-
-  │
-  ▼
-  
-Homepage Loads (index.html)
-
-  │
-  ▼
-  
-User Selects Disease Prediction
-(Malaria / Pneumonia / Kidney / Liver)
-
-  │
-  ▼
-  
-User Uploads Image / Enters Data
-
-  │
-  ▼
-  
-Flask Receives Input (POST Request)
-
-  │
-  ▼
-  
-Load Trained ML Model (.pkl)
-
-  │
-  ▼
-  
-Preprocess Input Data
-
-  │
-  ▼
-  
-Model Prediction
-
-  │
-  ▼
-  
-Prediction Result Generated
-
-  │
-  ▼
-  
-Result Sent to HTML Template
-
-  │
-  ▼
-  
-Result Displayed to User
-
-  │
-  ▼
-  
-End
-
-### Visual FC
-![Visual Flow Chart](images/flowchart.jpeg)
 ---
 
-#  Quick Start
+### Liver Disease Prediction
 
-### Step 1
+<img src="images/liver.png" width="800" alt="Liver Disease Prediction" />
 
-Clone the repository
+Uses the Indian Liver Patient dataset (ILPD). Input features include age, total bilirubin, direct bilirubin, alkaline phosphatase, and albumin protein levels.
 
+---
 
-git clone https://github.com/codexshami/Revive.git
-##  Quick Start
+### Malaria Detection
 
-### Step 1
-Clone the repository
+<img src="images/malaria.png" width="800" alt="Malaria Detection" />
 
-```bash
-git clone https://github.com/codexshami/Revive
+A Convolutional Neural Network trained on the NIH Malaria dataset containing 27,558 cell images. Users upload a blood smear image; the CNN classifies it as parasitized or uninfected.
+
+---
+
+### Pneumonia Detection
+
+<img src="images/pneumonia.png" width="800" alt="Pneumonia Detection" />
+
+A CNN trained on chest X-ray images from the Guangzhou Women and Children Medical Center dataset. The model distinguishes between normal lungs and pneumonia-affected lungs from a single uploaded X-ray.
+
+---
+
+## System Architecture
+
+```
+                    User Browser
+                         |
+                    HTTP Request
+                         |
+                   Flask App (app.py)
+                    /           \
+              GET /           POST /predict
+                |                   |
+          Render HTML         Receive Input
+          Template            (Form / Image)
+                                    |
+                             Load Trained Model
+                             (.pkl / .h5)
+                                    |
+                             Preprocess Input
+                             (Scaler / Normalize)
+                                    |
+                             Model Inference
+                                    |
+                             Generate Prediction
+                                    |
+                             Return Result
+                             to HTML Template
 ```
 
-### Step 2
-Go to project directory
+**Visual Flow Chart:**
+
+<img src="images/flowchart.jpeg" width="700" alt="Application Flow Chart" />
+
+---
+
+## Project Structure
+
+```
+Revive/
+│
+├── app.py                        # Flask application entry point
+├── requirements.txt              # Python dependencies
+│
+├── models/                       # Trained ML and DL model files
+│   ├── diabetes_model.pkl
+│   ├── breast_cancer_model.pkl
+│   ├── heart_model.pkl
+│   ├── kidney_model.pkl
+│   ├── liver_model.pkl
+│   ├── malaria_model.h5
+│   └── pneumonia_model.h5
+│
+├── static/                       # Static assets
+│   ├── logo.png
+│   ├── css/
+│   └── js/
+│
+├── templates/                    # HTML templates
+│   ├── index.html
+│   ├── diabetes.html
+│   ├── breast_cancer.html
+│   ├── heart.html
+│   ├── kidney.html
+│   ├── liver.html
+│   ├── malaria.html
+│   └── pneumonia.html
+│
+└── images/                       # Documentation images
+```
+
+---
+
+## Quick Start
+
+**Prerequisites:** Python 3.8 or higher, pip
+
+**Step 1 — Clone the repository**
+
+```bash
+git clone https://github.com/codexshami/Revive.git
+```
+
+**Step 2 — Navigate to the project directory**
 
 ```bash
 cd Revive
 ```
 
-### Step 3
-Install dependencies
+**Step 3 — Install all dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4
-Run the application
+**Step 4 — Start the application**
 
 ```bash
 python app.py
 ```
 
-or
+or alternatively:
 
 ```bash
 flask run
 ```
 
-### Step 5
-Open browser
+**Step 5 — Open in browser**
 
 ```
 http://127.0.0.1:5000
@@ -219,87 +238,38 @@ http://127.0.0.1:5000
 
 ---
 
-#  Screenshots
-### Home
-![Pneumonia Detection](images/home.png)
+## Technology Stack
 
-
-### Diabetes Prediction
-![Diabetes Prediction](images/diabetes.png)
-
-### Breast Cancer Prediction
-![Breast Cancer Prediction](images/breast_cancer.png)
-
-### Heart Disease Prediction
-![Heart Disease Prediction](images/heart.png)
-
-### Kidney Disease Prediction
-![Kidney Disease Prediction](images/kidney.png)
-
-### Liver Disease Prediction
-![Liver Disease Prediction](images/liver.png)
-
-### Malaria Detection
-![Malaria Detection](images/malaria.png)
-
-### Pneumonia Detection
-![Pneumonia Detection](images/pneumonia.png)
-
-### Services
-![Pneumonia Detection](images/sevices.png)
+| Layer | Technology |
+|---|---|
+| Backend Framework | Flask (Python) |
+| Machine Learning | scikit-learn |
+| Deep Learning | TensorFlow / Keras (CNN) |
+| Frontend | HTML5, Bootstrap 5 |
+| Model Serialization | Pickle (.pkl), HDF5 (.h5) |
+| Data Sources | Kaggle, UCI ML Repository |
 
 ---
 
-#  Technical Details
+## Key Capabilities
 
-This web application was developed using **Flask Web Framework**.
-
-Machine Learning models were trained on large datasets and integrated into the web application.
-
-The system can predict the following diseases:
-
-- Diabetes
-- Breast Cancer
-- Heart Disease
-- Kidney Disease
-- Liver Disease
-- Malaria
-- Pneumonia
+- Seven disease prediction modules in a single unified application
+- Dual modality input — structured clinical data for ML models, image upload for CNN models
+- Sub-second inference time on trained model files
+- Preprocessing pipelines baked into the prediction route for consistent results
+- Responsive web interface accessible from any modern browser
 
 ---
 
-#  Model Accuracy
+## Why This Matters
 
-| Disease | Model Type | Accuracy |
-|--------|------------|----------|
-| Diabetes | Machine Learning | 98.25% |
-| Breast Cancer | Machine Learning | 98.25% |
-| Heart Disease | Machine Learning | 85.25% |
-| Kidney Disease | Machine Learning | 99% |
-| Liver Disease | Machine Learning | 78% |
-| Malaria | CNN Deep Learning | 96% |
-| Pneumonia | CNN Deep Learning | 95% |
+Clinical diagnosis is demanding. Fatigue, time pressure, and cognitive load can introduce errors in manual assessment. Machine learning systems trained on thousands of validated patient records identify statistical patterns that complement clinical judgment — not replace it.
+
+This project demonstrates that disease prediction models with high accuracy can be packaged into accessible, user-friendly tools that reduce barriers to early detection and support better health outcomes.
 
 ---
 
-#  Developer
-
-**Mohd Shami**
-
- LinkedIn  
-https://www.linkedin.com/in/codexshami
-
- GitHub  
-https://github.com/codexshami
-
- Email  
-codexshami@gmail.com
-
----
-
-#  License
-
-Licensed under the **Apache License 2.0**
+## License
 
 ```
 Copyright 2026 Mohd Shami
@@ -308,14 +278,23 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```
 
-<p align="center">
-Made by Mohd Shami
-</p>
+---
 
+<div align="center">
+
+**Mohd Shami**
+
+[LinkedIn](https://www.linkedin.com/in/codexshami) &nbsp;|&nbsp; [GitHub](https://github.com/codexshami) &nbsp;|&nbsp; [Email](mailto:codexshami@gmail.com)
+
+<sub>Built with precision. Trained on data. Deployed for impact.</sub>
+
+</div>
