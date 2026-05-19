@@ -293,7 +293,7 @@ limitations under the License.
 
 **Mohd Shami**
 
-[LinkedIn](https://www.linkedin.com/in/codexshami) &nbsp;|&nbsp; [GitHub](https://github.com/codexshami) &nbsp;|&nbsp; [Email](mailto:codexshami@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/mohdshamii) &nbsp;|&nbsp; [GitHub](https://github.com/mohdshamii) &nbsp;|&nbsp; [Email](mailto:codexshami@gmail.com)
 
 <sub>Built with precision. Trained on data. Deployed for impact.</sub>
 
