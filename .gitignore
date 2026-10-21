@@ -1,72 +1,46 @@
-# Byte-compiled / optimized / DLL files
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
+*.pyo
+*.pyd
 *.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Virtual Environments
+# Virtual environments
 venv/
+.venv/
 env/
 ENV/
-env.bak/
-venv.bak/
 
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# IDEs & Text Editors
+# IDE and OS
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
-*.swp
-*.swo
-
-# Operating System Files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
 .DS_Store
-
-# Jupyter Notebook Checkpoints
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# Database files
-*.sqlite
-*.sqlite3
-instance/
-revive.db
-
-# Logs & Temporary Scratch Files
+Thumbs.db
 *.log
-scratch/
-scratch_*.txt
-temp_*.html
+
+# Testing and coverage
+.coverage
+htmlcov/
+
+# Generated files
+instance/
+uploads/
+*.db
+*.sqlite3
+
+# Build files
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
