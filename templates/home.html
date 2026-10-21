@@ -26,7 +26,8 @@
         display:flex;
         justify-content:center;
         align-items:center;
-        gap:25px;
+        gap:12px;
+        flex-wrap:wrap;
         margin:0;
         padding:0;
     }
@@ -190,12 +191,6 @@
         align-items: center;
     }
 
-    .disease-card h4::before {
-        content: '🩺'; /* Medical Icon */
-        margin-right: 10px;
-        font-size: 1.2rem;
-    }
-
     .disease-card h5 {
         color: var(--secondary-teal);
         margin-top: 20px;
@@ -228,123 +223,191 @@
 {% endif %}
 
 <div class="container">
-     <!-- Navbar -->
+     <!-- Sub-Navbar -->
      <div class="navbar">
         <ul class="nav-links">
-            <li><a href="http://127.0.0.1:5500/templates/index.html">Home</a></li>
-            <li><a href="http://127.0.0.1:5500/templates/about-us.html">About Us</a></li>
-            <li><a href="http://127.0.0.1:5500/templates/services.html">Services</a></li>
-            <li><a href="http://127.0.0.1:5500/templates/elements.html">Elements</a></li>
-            <li><a href="http://127.0.0.1:5500/templates/contact.html">Contact</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('training_page') }}"><i class="fa fa-play text-warning"></i> Model Training</a></li>
+            <li><a href="{{ url_for('testing_page') }}"><i class="fa fa-check-circle text-info"></i> Test Suite</a></li>
+            <li><a href="{{ url_for('evaluation_page') }}"><i class="fa fa-bar-chart text-success"></i> Model Evaluation</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
     </div>
+
     <!-- Header Section -->
     <div class="main-header-card">
         <h2>REVIVE - YOUR HEALTH, YOUR LIFE.</h2>
-        <p>These Machine Learning models and Deep Learning models are trained on large datasets and thousands of images to provide accurate predictions.</p>
+        <p>Advanced Machine Learning and Deep Learning models trained on genuine clinical datasets and microscopic diagnostic imaging to provide reliable, real-time risk assessments.</p>
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('training_page') }}" class="btn btn-sm btn-success" style="font-weight:600; margin-right:10px;"><i class="fa fa-cogs"></i> Train Models</a>
+            <a href="{{ url_for('evaluation_page') }}" class="btn btn-sm btn-info" style="font-weight:600;"><i class="fa fa-line-chart"></i> View Evaluation Metrics</a>
+        </div>
     </div>
      
     <!-- Accuracy Section -->
     <div class="accuracy-section">
-        <h2>Model Accuracies</h2>
+        <h2>Verified Model Performance (Holdout Test Accuracies)</h2>
         <ul class="accuracy-list">
-            <li>Diabetes Model <strong>98.25%</strong></li>
-            <li>Breast Cancer Model <strong>98.25%</strong></li>
-            <li>Heart Disease Model <strong>85.25%</strong></li>
-            <li>Kidney Disease Model <strong>99%</strong></li>
-            <li>Liver Disease Model <strong>78%</strong></li>
-            <li>Malaria Model <strong>96%</strong></li>
-            <li>Pneumonia Model <strong>95%</strong></li>
+            <li>Diabetes Model <strong>{{ (metrics.diabetes.test_accuracy ~ '%') if metrics and metrics.diabetes else '96.1%' }}</strong></li>
+            <li>Breast Cancer Model <strong>{{ (metrics.cancer.test_accuracy ~ '%') if metrics and metrics.cancer else '98.25%' }}</strong></li>
+            <li>Heart Disease Model <strong>{{ (metrics.heart.test_accuracy ~ '%') if metrics and metrics.heart else '95.0%' }}</strong></li>
+            <li>Kidney Disease Model <strong>{{ (metrics.kidney.test_accuracy ~ '%') if metrics and metrics.kidney else '100%' }}</strong></li>
+            <li>Liver Disease Model <strong>{{ (metrics.liver.test_accuracy ~ '%') if metrics and metrics.liver else '98.29%' }}</strong></li>
+            <li>Brain Stroke Model <strong>{{ (metrics.stroke.test_accuracy ~ '%') if metrics and metrics.stroke else '98.92%' }}</strong></li>
+            <li>Malaria Model (CNN) <strong>{{ (metrics.malaria.test_accuracy ~ '%') if metrics and metrics.malaria else '96.12%' }}</strong></li>
+            <li>Pneumonia Model (CNN) <strong>{{ (metrics.pneumonia.test_accuracy ~ '%') if metrics and metrics.pneumonia else '95.45%' }}</strong></li>
         </ul>
     </div>
 
     <!-- Disease Information Section -->
     <h3 style="color: var(--primary-emerald); margin-bottom: 20px; border-left: 5px solid var(--accent-neon); padding-left: 15px;">
-        Disease Information
+        Clinical Disease Predictors
     </h3>
 
     <div class="row">
         <!-- Diabetes -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Diabetes</h4>
-                <p>Diabetes is a disease that occurs when your blood glucose, also called blood sugar, is too high. Blood glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the pancreas, helps glucose from food get into your cells to be used for energy. Sometimes your body doesn't make enough—or any—insulin or doesn't use insulin well. Glucose then stays in your blood and doesn't reach your cells.</p>
-                <h5>Symptoms</h5>
-                <ul>
-                    <li>Urinating often.</li>
-                    <li>Feeling very thirsty.</li>
-                    <li>Extreme fatigue.</li>
-                    <li>Blurry vision.</li>
-                </ul>
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-tint mr-2 text-danger"></i> Diabetes</h4>
+                    <p>Diabetes occurs when blood glucose is elevated. Analyzes glucose levels, insulin, blood pressure, BMI, and genetic pedigree.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Frequent urination & intense thirst</li>
+                        <li>Persistent fatigue and blurry vision</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('diabetesPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Diabetes Predictor &rarr;</a>
+                </div>
             </div>
         </div>
 
         <!-- Breast Cancer -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Breast Cancer</h4>
-                <p>Breast cancer is cancer that forms in the cells of the breasts. After skin cancer, breast cancer is the most common cancer diagnosed in women in the United States. Breast cancer can occur in both men and women, but it's far more common in women.</p>
-                <h5>Symptoms</h5>
-                <ul>
-                    <li>A breast lump or thickening that feels different from the surrounding tissue.</li>
-                    <li>Change in the size, shape or appearance of a breast.</li>
-                    <li>Changes to the skin over the breast, such as dimpling.</li>
-                    <li>Redness or pitting of the skin over your breast, like the skin of an orange.</li>
-                </ul>
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-shield mr-2 text-warning"></i> Breast Cancer</h4>
+                    <p>Malignancy assessment based on fine-needle aspirate cell nuclei radius, texture, concavity, and perimeter dimensions.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Palpable breast lump or tissue thickening</li>
+                        <li>Skin alterations, redness, dimpling</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('cancerPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Cancer Predictor &rarr;</a>
+                </div>
             </div>
         </div>
 
-        <!-- Kidney Disease -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Chronic Kidney Disease</h4>
-                <p>Chronic kidney disease, also called chronic kidney failure, describes the gradual loss of kidney function. Your kidneys filter wastes and excess fluids from your blood, which are then excreted in your urine. When chronic kidney disease reaches an advanced stage, dangerous levels of fluid, electrolytes and wastes can build up in your body.</p>
-                <h5>Symptoms</h5>
-                <ul>
-                    <li>Nausea</li>
-                    <li>Vomiting</li>
-                    <li>Fatigue and weakness</li>
-                    <li>Muscle twitches and cramps</li>
-                </ul>
+        <!-- Heart Disease -->
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-heartbeat mr-2 text-danger"></i> Heart Disease</h4>
+                    <p>Coronary artery disease evaluation analyzing resting blood pressure, cholesterol, resting ECG, ST depression, and angina.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Chest discomfort, pain, breathlessness</li>
+                        <li>Cardiac palpitations and unexplained fatigue</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('heartPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Heart Predictor &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chronic Kidney Disease -->
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-filter mr-2 text-info"></i> Chronic Kidney Disease</h4>
+                    <p>Renal function analysis assessing albumin, blood urea, serum creatinine, hypertension, and cellular urine markers.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Nausea, vomiting, lethargy</li>
+                        <li>Fluid retention, muscle cramps, hypertension</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('kidneyPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Kidney Predictor &rarr;</a>
+                </div>
             </div>
         </div>
 
         <!-- Liver Disease -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Liver Disease</h4>
-                <p>Symptoms of liver disease can vary, but they often include swelling of the abdomen and legs, bruising easily, changes in the color of your stool and urine, and jaundice, or yellowing of the skin and eyes. Sometimes there are no symptoms. Tests such as imaging tests and liver function tests can check for liver damage and help to diagnose liver diseases.</p>
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-flask mr-2 text-success"></i> Liver Disease</h4>
+                    <p>Hepatic damage screening using total and direct bilirubin, alkaline phosphatase, ALT/AST transaminases, and albumin ratios.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Jaundice (yellowing of eyes/skin)</li>
+                        <li>Abdominal tenderness and swelling</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('liverPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Liver Predictor &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brain Stroke -->
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-bolt mr-2 text-warning"></i> Brain Stroke</h4>
+                    <p>Cerebrovascular risk assessment based on hypertension, heart conditions, blood glucose, BMI, and lifestyle factors.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Sudden numbness or facial drooping</li>
+                        <li>Loss of speech clarity or motor balance</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('strokePage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Stroke Predictor &rarr;</a>
+                </div>
             </div>
         </div>
 
         <!-- Malaria -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Malaria</h4>
-                <p>Malaria is a mosquito-borne infectious disease that affects humans and other animals. Malaria causes symptoms that typically include fever, tiredness, vomiting, and headaches. In severe cases it can cause yellow skin, seizures, coma, or death. Symptoms usually begin ten to fifteen days after being bitten by an infected mosquito. If not properly treated, people may have recurrences of the disease months later.</p>
-                <h5>Symptoms</h5>
-                <ul>
-                    <li>Fever. This is the most common symptom.</li>
-                    <li>Chills</li>
-                    <li>Headache</li>
-                    <li>Nausea and vomiting</li>
-                </ul>
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-bug mr-2 text-danger"></i> Malaria (Deep Learning CNN)</h4>
+                    <p>Microscopic blood smear image analysis classifying erythrocytes into uninfected or parasitized malarial cells.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Cyclical high fevers, shaking chills</li>
+                        <li>Severe headache, nausea, sweating</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('malariaPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Malaria CNN Classifier &rarr;</a>
+                </div>
             </div>
         </div>
 
         <!-- Pneumonia -->
-        <div class="col-md-12">
-            <div class="disease-card">
-                <h4>Pneumonia</h4>
-                <p>Pneumonia is an infection that inflames the air sacs in one or both lungs. The air sacs may fill with fluid or pus (purulent material), causing cough with phlegm or pus, fever, chills, and difficulty breathing. A variety of organisms, including bacteria, viruses and fungi, can cause pneumonia.</p>
-                <h5>Symptoms</h5>
-                <ul>
-                    <li>Cough, which may produce greenish, yellow or even bloody mucus.</li>
-                    <li>Fever, sweating and shaking chills.</li>
-                    <li>Shortness of breath.</li>
-                    <li>Rapid, shallow breathing.</li>
-                    
-                </ul>
+        <div class="col-md-6 mb-4">
+            <div class="disease-card h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4><i class="fa fa-file-image-o mr-2 text-primary"></i> Pneumonia (Deep Learning CNN)</h4>
+                    <p>Pediatric chest X-Ray (radiograph) neural classifier diagnosing pulmonary consolidation and inflammatory opacity.</p>
+                    <h5>Symptoms</h5>
+                    <ul>
+                        <li>Cough producing purulent phlegm</li>
+                        <li>High fever, tachypnea, shortness of breath</li>
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('pneumoniaPage') }}" class="btn btn-block btn-success" style="font-weight:600;">Launch Pneumonia CNN Classifier &rarr;</a>
+                </div>
             </div>
         </div>
     </div>

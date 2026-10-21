@@ -1,95 +1,315 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="og:title" content="KVG Disease Predictor">
-  <meta name="author" content="VENU GOPAL KADAMBA">
-  <meta name="og:image" content="static/logo1.png">
-  <meta name="Keywords" content="Flask, Machine Learning, Deep Learning, Artificial Intelligence, AI, ML,DL, Web Development">
-  <meta name="description" content="A Machine Learning and Deep Learning based webapp for Multiple Disease Prediction.">
-  <title>Revive · ML App</title>
-  <link rel="icon" href="{{ url_for('static', filename = 'logo1.png') }}" type="image/icon type">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer/">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <meta name="og:title" content="Revive - AI Diagnostic Suite">
+  <meta name="author" content="Mohd Shami">
+  <meta name="og:image" content="{{ url_for('static', filename='logo1.png') }}">
+  <meta name="Keywords" content="Flask, Machine Learning, Deep Learning, Disease Prediction, Healthcare AI, Diagnostic Suite">
+  <meta name="description" content="Revive - An AI Diagnostic Suite for multiple disease risk stratification and clinical machine learning.">
+  <title>Revive · AI Diagnostic Suite</title>
+  <link rel="icon" href="{{ url_for('static', filename='logo1.png') }}" type="image/png">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
   <style>
-    html, body{ height:100%; margin:0; }
-header{ height:50px;}
-footer{ height:75px; background:black; }
+    :root {
+      --primary-emerald: #047857;
+      --primary-emerald-hover: #065f46;
+      --secondary-teal: #0d9488;
+      --accent-mint: #10b981;
+      --bg-gradient: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0f9ff 100%);
+      --surface-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 12px 24px -4px rgba(4, 120, 87, 0.12), 0 6px 12px -3px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 20px 30px -10px rgba(4, 120, 87, 0.18);
+    }
 
-/* Trick */
-body{ 
-  display:flex; 
-  flex-direction:column; 
-}
-
-footer{
-  padding:10px;
-  margin-top:auto;
-  margin-bottom: auto; 
-}
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 72px;
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+    .navbar {
+      background-color: #0b1923 !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      padding: 10px 20px;
+      border-bottom: 1px solid #1e3a4e;
+    }
+    .navbar-brand img {
+      max-height: 44px;
+      width: auto;
+      transition: transform 0.2s ease;
+    }
+    .navbar-brand:hover img {
+      transform: scale(1.03);
+    }
+    .nav-link {
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 8px 14px !important;
+      color: #cbd5e1 !important;
+      transition: all 0.2s ease;
+      border-radius: 6px;
+    }
+    .nav-link:hover, .nav-item.active .nav-link {
+      color: #34d399 !important;
+      background: rgba(255,255,255,0.06);
+    }
+    .dropdown-menu {
+      background-color: #0f2330;
+      border: 1px solid #1e3a4e;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      padding: 8px 0;
+    }
+    .dropdown-item {
+      color: #cbd5e1;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 9px 20px;
+      transition: all 0.15s ease;
+    }
+    .dropdown-item:hover {
+      background-color: var(--primary-emerald);
+      color: #ffffff;
+      padding-left: 24px;
+    }
+    .dropdown-divider {
+      border-color: #1e3a4e;
+      margin: 6px 0;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    footer {
+      flex-shrink: 0;
+      background: #0b1923;
+      padding: 24px 0 20px 0;
+      border-top: 1px solid #1e293b;
+      color: #94a3b8;
+    }
+    footer a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover {
+      color: #34d399;
+      text-decoration: none;
+    }
+    .user-pill {
+      background: var(--primary-emerald);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-right: 10px;
+      box-shadow: 0 2px 6px rgba(4,120,87,0.3);
+    }
+    .revive-btn-primary {
+      background: linear-gradient(135deg, #047857 0%, #0d9488 100%);
+      color: #ffffff;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 10px 20px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .revive-btn-primary:hover {
+      background: linear-gradient(135deg, #065f46 0%, #0f766e 100%);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(4,120,87,0.3);
+      text-decoration: none;
+    }
+    .revive-btn-outline {
+      background: transparent;
+      color: #047857;
+      border: 1.5px solid #047857;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 9px 18px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .revive-btn-outline:hover {
+      background: #047857;
+      color: #ffffff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    /* Responsive tweaks */
+    @media (max-width: 991.98px) {
+      body {
+        padding-top: 66px;
+      }
+      .navbar-collapse {
+        background: #0b1923;
+        padding: 14px;
+        border-radius: 8px;
+        margin-top: 10px;
+        border: 1px solid #1e3a4e;
+      }
+    }
   </style>
-
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" style="background-color: black !important;">
-        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename = 'logo.png') }} " height="60px" width="275px"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-           <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarNav">
-           <ul class="navbar-nav ml-auto">
-             <li class="nav-item active">
-               <a href="{{ url_for('home') }}" class="nav-link"></a>
-             </li>
-             <li class="nav-item active">
-               <a class="nav-link" href="{{ url_for('diabetesPage') }}">Diabetes</a>
-             </li>
-             <li class="nav-item active">
-               <a class="nav-link" href="{{ url_for('cancerPage') }}">Breast Cancer</a>
-             </li>
-             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('heartPage') }}">Heart</a>
-             </li>
-             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('kidneyPage') }}">Kidney</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('liverPage') }}">Liver</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('malariaPage') }}">Malaria</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('pneumoniaPage') }}">Pneumonia</a>
-              </li>
-           </ul>
-         </div>
-       </nav>
-	<br>
-<br>
-<br>
-<br>
-<main>
-	<div class="container-fluid" style="margin-bottom: 20px;">
-	{% block content %}
+  <nav class="navbar navbar-expand-xl navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Revive Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-	{% endblock %}
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}"><i class="fa fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}"><i class="fa fa-th-large"></i> Dashboard</a>
+          </li>
+
+          <!-- Disease Models Dropdown / Links -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="diseaseDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-stethoscope mr-1"></i> Disease Predictors
+            </a>
+            <div class="dropdown-menu" aria-labelledby="diseaseDropdown">
+              <a class="dropdown-item" href="{{ url_for('diabetesPage') }}"><i class="fa fa-tint mr-2 text-danger"></i> Diabetes</a>
+              <a class="dropdown-item" href="{{ url_for('cancerPage') }}"><i class="fa fa-shield mr-2 text-warning"></i> Breast Cancer</a>
+              <a class="dropdown-item" href="{{ url_for('heartPage') }}"><i class="fa fa-heartbeat mr-2 text-danger"></i> Heart Disease</a>
+              <a class="dropdown-item" href="{{ url_for('kidneyPage') }}"><i class="fa fa-filter mr-2 text-info"></i> Kidney Disease</a>
+              <a class="dropdown-item" href="{{ url_for('liverPage') }}"><i class="fa fa-flask mr-2 text-success"></i> Liver Disease</a>
+              <a class="dropdown-item" href="{{ url_for('strokePage') }}"><i class="fa fa-bolt mr-2 text-warning"></i> Brain Stroke</a>
+              <div class="dropdown-divider" style="border-color:#1e3a4e;"></div>
+              <a class="dropdown-item" href="{{ url_for('malariaPage') }}"><i class="fa fa-bug mr-2 text-danger"></i> Malaria (CNN)</a>
+              <a class="dropdown-item" href="{{ url_for('pneumoniaPage') }}"><i class="fa fa-file-image-o mr-2 text-primary"></i> Pneumonia (CNN)</a>
+            </div>
+          </li>
+
+          <!-- ML Pipeline Dropdown (Notebook Themed Modules) -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-warning" href="#" id="pipelineDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cogs"></i> ML Pipeline
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pipelineDropdown">
+              <a class="dropdown-item" href="{{ url_for('training_page') }}"><i class="fa fa-play text-success"></i> Model Training (Notebook)</a>
+              <a class="dropdown-item" href="{{ url_for('testing_page') }}"><i class="fa fa-check-circle text-info"></i> Test Split Suite</a>
+              <a class="dropdown-item" href="{{ url_for('evaluation_page') }}"><i class="fa fa-bar-chart text-warning"></i> Evaluation & Metrics</a>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('services') }}">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('about_us') }}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto align-items-center">
+          {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <span class="user-pill"><i class="fa fa-user"></i> {{ current_user.username }}</span>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-outline-danger btn-sm" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-success btn-sm ml-2" href="{{ url_for('register') }}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container-fluid" style="margin-bottom: 30px;">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="container" style="max-width: 900px; margin-top: 15px;">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category if category != 'danger' else 'danger' }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}
+      {% endblock %}
     </div>
   </main>
+
   <footer>
-    <center>
-      <ul style="list-style-type:none;">
-      <li style="display: inline;"><a href="https://www.linkedin.com/in/mohd-shami-792133276" style="color: white;" target="blank"><span class="fa fa-linkedin">  LinkedIn</span></a></li>
-      &nbsp;
-      <li style="display: inline;"><a href="https://github.com/codexshami" style="color: white;" target="blank"><span class="fa fa-github">  GitHub</span></a></li>
-      <li><p style="color: white;">Made with <span style="color: red;">&hearts;</span> by Mohd Shami </p></li>
-    </ul>
-  </center>
+    <div class="container text-center">
+      <ul style="list-style-type:none; padding:0; margin:0 0 10px 0;">
+        <li style="display: inline; margin-right: 18px;">
+          <a href="https://mohdshamii.github.io/" target="_blank"><i class="fa fa-globe mr-1"></i> Portfolio</a>
+        </li>
+        <li style="display: inline; margin-right: 18px;">
+          <a href="https://github.com/mohdshamii/Revive" target="_blank"><i class="fa fa-github mr-1"></i> GitHub Repo</a>
+        </li>
+        <li style="display: inline; margin-right: 18px;">
+          <a href="https://www.linkedin.com/in/mohdshamii" target="_blank"><i class="fa fa-linkedin mr-1"></i> LinkedIn</a>
+        </li>
+        <li style="display: inline; margin-right: 18px;">
+          <a href="mailto:codexshami@gmail.com"><i class="fa fa-envelope-o mr-1"></i> codexshami@gmail.com</a>
+        </li>
+        <li style="display: inline;">
+          <a href="{{ url_for('evaluation_page') }}"><i class="fa fa-line-chart mr-1"></i> Verified Telemetry</a>
+        </li>
+      </ul>
+      <p style="margin:0; font-size:0.88rem; color:#94a3b8;">
+        Developed by <a href="https://mohdshamii.github.io/" target="_blank" style="color:#34d399; font-weight:600;">Mohd Shami</a> &middot; Revive Healthcare Diagnostics &copy; 2026 &middot; Clinical Machine Learning & Deep Learning Suite
+      </p>
+    </div>
   </footer>
 </body>
 </html>

@@ -1,646 +1,345 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Contact Revive – ML based medical diagnosis web app">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Revive · ML App | Contact</title>
-    <!-- favicon inline (simple) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
-    <style>
-        /* === INTERNAL CSS — ATTRACTIVE HEALTHCENE THEME === */
-        /* Primary: Emerald Green #2C9A6E, Secondary: Teal Blue #2C7A9A, Accent: Neon Green #B0FF57 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% extends 'main.html' %}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f6fbfb;  /* light medical white‑blue */
-            color: #173e4c;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
+{% block content %}
+<style>
+  /* ====================================================================
+     REVIVE AI DIAGNOSTIC SUITE — UNIFIED CONTACT PAGE
+     Theme: Emerald Green (#047857), Teal (#0d9488), Mint (#10b981)
+     No emojis — Pure SVGs, FontAwesome icons, and crisp typography
+     ==================================================================== */
 
-        /* subtle medical pattern / gradients */
-        .gradient-background-overlay {
-            background: linear-gradient(98deg, rgba(44,154,110,0.92) 0%, rgba(44,122,154,0.9) 100%), url('templates/img/bg-img/breadcumb3.jpg') no-repeat center center / cover;
-            background-blend-mode: overlay;
-        }
+  .contact-hero {
+    background: linear-gradient(135deg, #091a24 0%, #0f2e3d 60%, #064e3b 100%);
+    border-radius: 18px;
+    padding: 55px 35px;
+    color: #ffffff;
+    box-shadow: 0 15px 35px -10px rgba(0,0,0,0.3);
+    margin-top: 15px;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .contact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34d399;
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+  .contact-hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .contact-hero p {
+    font-size: 1.05rem;
+    color: #cbd5e1;
+    max-width: 750px;
+    line-height: 1.6;
+    margin: 0;
+  }
 
-        /* = header & top bar = */
-        .header-area {
-            background: white;
-            box-shadow: 0 12px 30px -10px rgba(44,122,154,0.15);
-        }
+  .contact-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow: 0 6px 16px -4px rgba(0,0,0,0.05);
+    margin-bottom: 35px;
+  }
+  .contact-form label {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+  .contact-form .form-control {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+  }
+  .contact-form .form-control:focus {
+    border-color: #047857;
+    box-shadow: 0 0 0 3px rgba(4,120,87,0.15);
+  }
 
-        .top-header-area {
-            background: linear-gradient(135deg, #2C9A6E, #2C7A9A);
-            padding: 10px 0;
-            color: white;
-            font-size: 0.95rem;
-        }
+  /* Info Item */
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .info-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  .info-title {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .info-desc {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .info-desc a {
+    color: #047857;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .info-desc a:hover {
+    color: #065f46;
+    text-decoration: underline;
+  }
 
-        .top-header-area a {
-            color: #B0FF57;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px dashed;
-        }
+  /* FAQ Accordion */
+  .faq-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .faq-card h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .faq-card p {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
 
-        .top-header-area a:hover {
-            color: #ffffff;
-        }
+<div class="container-fluid" style="max-width: 1340px; padding: 0 15px;">
 
-        .top-header-area span {
-            font-weight: 700;
-            color: #B0FF57;
-        }
+  <!-- Hero Banner -->
+  <div class="contact-hero">
+    <div class="contact-badge">
+      <i class="fa fa-envelope-o"></i> Get in Touch
+    </div>
+    <h1>Contact Revive Healthcare Diagnostics</h1>
+    <p>
+      Reach out for clinical inquiries, AI model integration partnerships, research collaborations, or technical support with the Revive diagnostic suite.
+    </p>
+  </div>
 
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+  <div class="row">
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
+    <!-- Contact Form Column -->
+    <div class="col-lg-7">
+      <div class="contact-card">
+        <h3 style="font-weight: 800; color: #0f172a; margin-bottom: 8px;">Send a Direct Message</h3>
+        <p style="color: #64748b; font-size: 0.92rem; margin-bottom: 25px;">
+          Have questions or feedback regarding our diagnostic models? Complete the form below to reach the engineering team.
+        </p>
 
-        .main-header-area {
-            background: white;
-            padding: 8px 0;
-        }
-
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .navbar-brand img {
-            max-height: 48px;
-            filter: drop-shadow(0 4px 6px #c8e6de);
-        }
-
-        .navbar-toggler {
-            background: transparent;
-            border: 2px solid #2C9A6E;
-            border-radius: 40px;
-            padding: 8px 16px;
-            color: #2C9A6E;
-            font-size: 1.5rem;
-            display: none;
-            cursor: pointer;
-        }
-
-        .navbar-collapse {
-            display: flex;
-            flex-grow: 1;
-        }
-
-        .navbar-nav {
-            display: flex;
-            list-style: none;
-            margin-left: auto;
-            align-items: center;
-            gap: 0.2rem;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            color: #15424f;
-            font-weight: 500;
-            padding: 10px 18px;
-            border-radius: 40px;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .nav-link:hover, .nav-item.active .nav-link {
-            background: #dff7f0;
-            color: #2C9A6E;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background: white;
-            min-width: 200px;
-            border-radius: 24px;
-            box-shadow: 0 25px 35px -12px rgba(44,154,110,0.3);
-            border: 1px solid #b0f0d5;
-            padding: 12px 0;
-            z-index: 999;
-        }
-
-        .dropdown-item {
-            display: block;
-            padding: 8px 22px;
-            color: #2C7A9A;
-            text-decoration: none;
-        }
-
-        .dropdown-item:hover {
-            background: #e3fff2;
-            color: #2C9A6E;
-        }
-
-        .medilife-appoint-btn {
-            background: #B0FF57;
-            color: #0b332b !important;
-            font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 40px;
-            text-decoration: none;
-            box-shadow: 0 10px 18px -8px #2C9A6E;
-            transition: 0.2s;
-            margin-left: 20px;
-            border: none;
-            display: inline-block;
-        }
-
-        .medilife-appoint-btn span {
-            background: #2C9A6E;
-            color: white;
-            border-radius: 30px;
-            padding: 2px 12px;
-            margin-left: 8px;
-        }
-
-        .medilife-appoint-btn:hover {
-            background: #2C9A6E;
-            color: white !important;
-        }
-
-        /* = breadcumb = */
-        .breadcumb-area {
-            padding: 100px 0;
-            text-align: center;
-            color: white;
-        }
-
-        .breadcumb-title {
-            font-size: 4rem;
-            font-weight: 700;
-            text-shadow: 0 8px 14px #004d40;
-        }
-
-        /* = contact area = */
-        .medilife-contact-area {
-            padding: 100px 0;
-            background: #ffffff;
-        }
-
-        .contact-form {
-            background: white;
-            border-radius: 40px 20px 40px 20px;
-            padding: 50px 40px;
-            box-shadow: 0 30px 50px -18px rgba(44,122,154,0.25);
-            border: 1px solid #c4f2e0;
-        }
-
-        .contact-form h5 {
-            color: #2C9A6E;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            border-left: 12px solid #B0FF57;
-            padding-left: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 30px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e2f0ec;
-            border-radius: 60px;
-            font-size: 1.05rem;
-            transition: 0.2s;
-            background: #fafffe;
-        }
-
-        .form-control:focus {
-            border-color: #2C9A6E;
-            outline: none;
-            box-shadow: 0 0 0 5px rgba(44,154,110,0.2);
-        }
-
-        textarea.form-control {
-            border-radius: 30px;
-            resize: vertical;
-        }
-
-        .medilife-btn {
-            background: #B0FF57;
-            border: none;
-            border-radius: 60px;
-            padding: 16px 36px;
-            font-weight: 700;
-            color: #00241e;
-            font-size: 1.2rem;
-            transition: 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .medilife-btn a {
-            color: #00241e;
-            text-decoration: none;
-        }
-
-        .medilife-btn span {
-            background: #2C9A6E;
-            color: white;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: inline-block;
-            line-height: 36px;
-            margin-left: 12px;
-            font-weight: 800;
-        }
-
-        .medilife-btn:hover {
-            background: #2C9A6E;
-            border-color: #B0FF57;
-        }
-        .medilife-btn:hover a { color: white; }
-
-        /* = sidebar cards = */
-        .content-sidebar {
-            padding-left: 20px;
-        }
-
-        .medilife-contact-card {
-            background: white;
-            border-radius: 40px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 40px -12px #2C7A9A;
-            border: 1px solid #bcf0de;
-            margin-bottom: 30px;
-        }
-
-        .single-contact {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .contact-icon {
-            background: #eafff2;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            border: 2px solid #B0FF57;
-            font-size: 2rem;
-            color: #2C9A6E;
-        }
-
-        .contact-meta p {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #174450;
-        }
-
-        .medilife-emergency-card {
-            background: linear-gradient(145deg, #2C9A6E, #2C7A9A);
-            padding: 45px 25px;
-            border-radius: 40px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 30px 35px -8px #1a5342;
-            border: 3px solid #B0FF57;
-        }
-
-        .medilife-emergency-card i {
-            font-size: 4rem;
-            background: #B0FF57;
-            color: #2C9A6E;
-            width: 100px;
-            height: 100px;
-            line-height: 100px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .medilife-emergency-card h2 {
-            font-size: 2.1rem;
-            font-weight: 500;
-        }
-
-        .medilife-emergency-card h3 {
-            font-size: 4rem;
-            font-weight: 800;
-            text-shadow: 0 5px 10px #0b422b;
-        }
-
-        /* = footer = */
-        .footer-area {
-            background: #0f2933;
-            color: #d2f0ea;
-        }
-        .main-footer-area {
-            background: radial-gradient(circle at 10% 20%, #1d5959, #0b303a);
-            padding: 70px 0 30px;
-        }
-        .footer-widget-area p {
-            color: #c7ece3;
-            line-height: 1.8;
-        }
-        .footer-logo img {
-            max-width: 170px;
-            filter: brightness(0) invert(1);
-            margin-bottom: 20px;
-        }
-        .widget-title h6 {
-            color: white;
-            font-size: 1.7rem;
-            border-bottom: 4px solid #B0FF57;
-            display: inline-block;
-            padding-bottom: 6px;
-            margin-bottom: 30px;
-        }
-        .footer-contact-form input,
-        .footer-contact-form textarea,
-        .footer-newsletter-area input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #479f9f;
-            padding: 14px 0;
-            color: white;
-            width: 100%;
-            margin-bottom: 25px;
-            outline: none;
-        }
-        .footer-contact-form input::placeholder,
-        .footer-contact-form textarea::placeholder {
-            color: #bae2e2;
-        }
-        .footer-contact-form .medilife-btn,
-        .footer-newsletter-area button {
-            background: #B0FF57;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 30px;
-            font-weight: 700;
-            color: #00332a;
-            width: auto;
-            cursor: pointer;
-        }
-        .footer-newsletter-area button a {
-            color: #00332a;
-            text-decoration: none;
-        }
-        .bottom-footer-area {
-            background: #06212b;
-            padding: 22px 0;
-            text-align: center;
-        }
-        .copywrite-text a {
-            color: #B0FF57;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        .copywrite-text a:hover {
-            text-decoration: underline;
-        }
-
-        /* responsiveness */
-        @media (max-width: 991px) {
-            .navbar-collapse { display: none; }
-            .navbar-toggler { display: block; }
-            .navbar-nav { flex-direction: column; width: 100%; }
-            .content-sidebar { padding-left: 0; margin-top: 50px; }
-            .col-lg-4, .col-lg-8 { flex: 0 0 100%; max-width: 100%; }
-        }
-        /* preloader */
-        #preloader {
-            position: fixed;
-            inset: 0;
-            background: white;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .medilife-load {
-            width: 70px;
-            height: 70px;
-            border: 7px solid #2C9A6E;
-            border-top-color: #B0FF57;
-            border-radius: 50%;
-            animation: spin 0.9s infinite linear;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-    <!-- Preloader -->
-    <div id="preloader"><div class="medilife-load"></div></div>
-
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area">
-        <div class="top-header-area">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-12 h-100">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <p>🏥 <span>Revive</span> A ML model</p>
-                            <p>📈 Covid updates: <span><a href="https://www.bing.com/covid/local/india">click me</a></span></p>
-                        </div>
-                    </div>
-                </div>
+        <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="cName">Your Name</label>
+              <input type="text" class="form-control" id="cName" placeholder="Dr. Jane Doe" required>
             </div>
-        </div>
-        <div class="main-header-area" id="stickyHeader">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-                    <div class="col-12 h-100">
-                        <div class="main-menu h-100">
-                            <nav class="navbar h-100">
-                                <a class="navbar-brand" href="index.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30' font-weight='bold' font-family='Arial'%3EREVIVE%3C/text%3E%3C/svg%3E" alt="Revive" style="height:48px;"></a>
-                                <button class="navbar-toggler" type="button">☤</button>
-                                <div class="collapse navbar-collapse" id="medilifeMenu">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#">Pages ▼</a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="index.html">Home</a>
-                                                <a class="dropdown-item" href="about-us.html">About Us</a>
-                                                <a class="dropdown-item" href="services.html">Services</a>
-                                                <a class="dropdown-item" href="contact.html">Contact</a>
-                                                <a class="dropdown-item" href="index-icons.html">All Icons</a>
-                                            </div>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link" href="about-us.html">About Us</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                                        <li class="nav-item active"><a class="nav-link" href="contact.html">Contact</a></li>
-                                    </ul>
-                                    <a href="tel:1097" class="medilife-appoint-btn ml-30">For <span>emergencies</span> Click here</a>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group col-md-6">
+              <label for="cEmail">Email Address</label>
+              <input type="email" class="form-control" id="cEmail" placeholder="jane@hospital.org" required>
             </div>
-        </div>
-    </header>
-    <!-- ***** Header End ***** -->
+          </div>
 
-    <!-- ***** Breadcumb Area Start ***** -->
-    <section class="breadcumb-area gradient-background-overlay" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1000\' height=\'600\'%3E%3Cdefs%3E%3Cpattern id=\'a\' width=\'40\' height=\'40\' patternUnits=\'userSpaceOnUse\'%3E%3Cpath d=\'M0 20 L40 20 M20 0 L20 40\' stroke=\'%23B0FF57\' stroke-width=\'1\' opacity=\'0.2\'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=\'1000\' height=\'600\' fill=\'url(%23a)\'/%3E%3C/svg%3E');">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">📬 Contact</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <div class="form-group">
+            <label for="cSubject">Inquiry Topic</label>
+            <select class="form-control" id="cSubject">
+              <option value="Model Deployment & Integration">Model Deployment &amp; EHR Integration</option>
+              <option value="Research & Clinical Datasets">Research &amp; Clinical Datasets</option>
+              <option value="Evaluation Telemetry Inquiry">Evaluation Telemetry &amp; ROC-AUC Validation</option>
+              <option value="General Technical Question">General Technical Question</option>
+            </select>
+          </div>
 
-    <!-- ***** Contact Section ***** -->
-    <section class="medilife-contact-area section-padding-100">
-        <div class="container">
-            <div class="row">
-                <!-- Contact Form -->
-                <div class="col-12 col-lg-8">
-                    <div class="contact-form">
-                        <h5 class="mb-50">Get in touch</h5>
-                        <form action="#" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="contact-name" placeholder="Your name">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="contact-email" placeholder="Email address">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="message" id="message" cols="30" rows="6" placeholder="How can we help?"></textarea>
-                            </div>
-                            <button type="submit" class="medilife-btn"><a href="mailto:karanmehra7107@gmail.com">📨 Send Message</a> <span>+</span></button>
-                        </form>
-                    </div>
-                </div>
+          <div class="form-group">
+            <label for="cMessage">Your Message</label>
+            <textarea class="form-control" id="cMessage" rows="5" placeholder="Describe your inquiry, diagnostic research questions, or integration requirements..." required></textarea>
+          </div>
 
-                <!-- Sidebar -->
-                <div class="col-12 col-lg-4">
-                    <div class="content-sidebar">
-                        <!-- Contact Card -->
-                        <div class="medilife-contact-card mb-50">
-                            <div class="single-contact">
-                                <div class="contact-icon">🏫</div>
-                                <div class="contact-meta"><p>TMU-Btech (DS)<br>TMU University</p></div>
-                            </div>
-                            <div class="single-contact">
-                                <div class="contact-icon">📞</div>
-                                <div class="contact-meta"><p>+91-8923591576</p></div>
-                            </div>
-                            <div class="single-contact">
-                                <div class="contact-icon">✉️</div>
-                                <div class="contact-meta"><p>shamimohd367@gmail.com</p></div>
-                            </div>
-                        </div>
-                        <!-- Emergency Card -->
-                        <div class="medilife-emergency-card" style="background-image: linear-gradient(145deg, #2C9A6E, #2C7A9A);">
-                            <i class="icon-smartphone">🚑</i>
-                            <h2>Emergency calls</h2>
-                            <h3>1097</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <button type="submit" class="revive-btn-primary" style="padding: 12px 28px;">
+            <i class="fa fa-paper-plane mr-1"></i> Send Inquiry Message
+          </button>
+        </form>
 
-    <!-- ***** Footer ***** -->
-    <footer class="footer-area section-padding-100">
-        <div class="main-footer-area">
-            <div class="container-fluid" style="max-width:1300px;">
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area">
-                            <div class="footer-logo">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30' font-weight='bold'%3EREVIVE%3C/text%3E%3C/svg%3E" alt="">
-                            </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt quis nesciunt odio maiores molestias voluptas.</p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area">
-                            <div class="widget-title"><h6>Contact Form</h6></div>
-                            <div class="footer-contact-form">
-                                <form>
-                                    <input type="text" placeholder="Name">
-                                    <input type="email" placeholder="Your Email">
-                                    <textarea placeholder="Message"></textarea>
-                                    <button type="submit" class="medilife-btn"><a href="mailto:vc63601@gmail.com">Send Email</a> <span>+</span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area">
-                            <div class="widget-title"><h6>News Letter</h6></div>
-                            <div class="footer-newsletter-area">
-                                <form>
-                                    <input type="email" placeholder="Your Email Here">
-                                    <button type="submit"><a href="mailto:vc63601@gmail.com">✉️ Subscribe</a></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="formFeedback" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; font-size: 0.9rem;">
+          <i class="fa fa-check-circle mr-1"></i> Thank you! Your message has been prepared. Opening your default mail client addressed to <strong>codexshami@gmail.com</strong>...
         </div>
-        <div class="bottom-footer-area">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="copywrite-text">
-                            <p>Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+      </div>
+    </div>
 
-    <!-- scripts -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script>
-        window.addEventListener('load', () => document.getElementById('preloader').style.display = 'none');
-        document.querySelector('.navbar-toggler')?.addEventListener('click', function(){
-            document.getElementById('medilifeMenu').style.display = 
-                document.getElementById('medilifeMenu').style.display === 'block' ? 'none' : 'block';
-        });
-    </script>
-    <!-- (google maps script placeholder but kept from original) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
-</body>
-</html>
+    <!-- Official Contact Details Column -->
+    <div class="col-lg-5">
+      <div class="contact-card">
+        <h3 style="font-weight: 800; color: #0f172a; margin-bottom: 20px;">Developer Information</h3>
+
+        <!-- Developer -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa fa-user-md"></i>
+          </div>
+          <div>
+            <div class="info-title">Lead Engineer</div>
+            <p class="info-desc">
+              <strong>Mohd Shami</strong><br>
+              Clinical Machine Learning &amp; Healthcare AI Engineer
+            </p>
+          </div>
+        </div>
+
+        <!-- Portfolio -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <div>
+            <div class="info-title">Personal Portfolio</div>
+            <p class="info-desc">
+              <a href="https://mohdshamii.github.io/" target="_blank">https://mohdshamii.github.io/</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Repository -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa fa-github"></i>
+          </div>
+          <div>
+            <div class="info-title">GitHub Repository</div>
+            <p class="info-desc">
+              <a href="https://github.com/mohdshamii/Revive" target="_blank">github.com/mohdshamii/Revive</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa fa-envelope-o"></i>
+          </div>
+          <div>
+            <div class="info-title">Primary Email</div>
+            <p class="info-desc">
+              <a href="mailto:codexshami@gmail.com">codexshami@gmail.com</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- LinkedIn -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa fa-linkedin"></i>
+          </div>
+          <div>
+            <div class="info-title">Professional Network</div>
+            <p class="info-desc">
+              <a href="https://www.linkedin.com/in/mohdshamii" target="_blank">linkedin.com/in/mohdshamii</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- License Card -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-top: 10px;">
+          <div style="font-weight: 700; color: #0f172a; font-size: 0.9rem; margin-bottom: 4px;">
+            <i class="fa fa-shield text-success mr-1"></i> Open-Source Architecture
+          </div>
+          <div style="font-size: 0.84rem; color: #64748b; line-height: 1.5;">
+            Revive is open source under the Apache 2.0 License. All models, preprocessing pipelines, and evaluation metrics are reproducible locally.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Frequently Asked Questions -->
+  <div class="contact-card">
+    <h3 style="font-weight: 800; color: #0f172a; margin-bottom: 20px;">Frequently Asked Questions</h3>
+
+    <div class="faq-card">
+      <h5><i class="fa fa-question-circle text-success mr-1"></i> How are patient biomarker predictions calculated?</h5>
+      <p>
+        Patient physiological values are normalized using standard scaler artifacts and processed through trained Random Forest ensembles. For image modalities (malaria thin smears and pneumonia radiographs), normalized pixel arrays are evaluated by convolutional neural networks.
+      </p>
+    </div>
+
+    <div class="faq-card">
+      <h5><i class="fa fa-question-circle text-success mr-1"></i> Does Revive transmit sensitive health data to external cloud APIs?</h5>
+      <p>
+        No. Revive runs 100% locally on your server. All dataset processing, feature extraction, and neural inferences happen directly within your Python/Flask execution environment with zero third-party telemetry sharing.
+      </p>
+    </div>
+
+    <div class="faq-card">
+      <h5><i class="fa fa-question-circle text-success mr-1"></i> Can clinical practitioners retrain models with hospital-specific datasets?</h5>
+      <p>
+        Yes. The interactive ML Pipeline module (accessible via the top navigation bar at <code>/training</code>) allows practitioners to adjust split ratios and tree estimators, triggering live retraining and updated metric persistence.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('cName').value;
+    const email = document.getElementById('cEmail').value;
+    const subject = document.getElementById('cSubject').value;
+    const message = document.getElementById('cMessage').value;
+
+    const feedback = document.getElementById('formFeedback');
+    feedback.style.display = 'block';
+
+    const mailtoUri = 'mailto:codexshami@gmail.com?subject=' + encodeURIComponent('[Revive Inquiry] ' + subject + ' - ' + name) + '&body=' + encodeURIComponent('Sender: ' + name + ' (' + email + ')\n\nMessage:\n' + message);
+    
+    setTimeout(() => {
+      window.location.href = mailtoUri;
+    }, 800);
+  }
+</script>
+{% endblock %}

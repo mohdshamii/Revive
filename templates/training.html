@@ -1,0 +1,489 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    :root {
+        --nb-bg: #f7f9fa;
+        --nb-border: #cfd8dc;
+        --nb-active-border: #047857;
+        --nb-prompt: #303f9f;
+        --nb-out-prompt: #d32f2f;
+        --primary-emerald: #047857;
+        --secondary-teal: #0d9488;
+        --code-bg: #f8fafc;
+        --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+        background: #eef2f5;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .notebook-wrapper {
+        max-width: 1100px;
+        margin: 20px auto 40px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--nb-border);
+        overflow: hidden;
+    }
+
+    /* Jupyter Notebook Header Bar */
+    .notebook-header {
+        background: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .notebook-title-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .notebook-logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background: #f37626;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    .notebook-filename {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #212121;
+        margin: 0;
+    }
+
+    .notebook-badge {
+        background: #e0f2fe;
+        color: #0369a1;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 12px;
+    }
+
+    .kernel-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: #4b5563;
+    }
+
+    .kernel-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+    }
+
+    /* Toolbar */
+    .notebook-toolbar {
+        background: #fafafa;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 8px 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .toolbar-btn {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        color: #374151;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+    }
+
+    .toolbar-btn:hover {
+        background: #f3f4f6;
+        border-color: #9ca3af;
+    }
+
+    /* Notebook Cells */
+    .notebook-body {
+        padding: 25px;
+    }
+
+    .cell {
+        display: flex;
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    .cell:hover .cell-input-container {
+        border-left: 4px solid #60a5fa;
+    }
+
+    .cell.active .cell-input-container {
+        border-left: 4px solid var(--primary-emerald);
+    }
+
+    .prompt {
+        width: 85px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        color: var(--nb-prompt);
+        padding-top: 8px;
+        text-align: right;
+        padding-right: 15px;
+        user-select: none;
+        flex-shrink: 0;
+    }
+
+    .prompt.out {
+        color: var(--nb-out-prompt);
+    }
+
+    .cell-input-container {
+        flex-grow: 1;
+        background: var(--code-bg);
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #cbd5e1;
+        border-radius: 4px;
+        padding: 12px 16px;
+        box-sizing: border-box;
+        transition: border 0.2s;
+    }
+
+    .markdown-cell {
+        background: #ffffff;
+        border: 1px solid transparent;
+        border-left: 4px solid transparent;
+        padding: 6px 12px;
+    }
+
+    .code-editor {
+        font-family: "Fira Code", Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #1e293b;
+        background: transparent;
+        white-space: pre-wrap;
+    }
+
+    .keyword { color: #005cc5; font-weight: 600; }
+    .string { color: #032f62; }
+    .comment { color: #6a737d; font-style: italic; }
+    .function { color: #6f42c1; font-weight: 600; }
+    .number { color: #005cc5; }
+
+    /* Interactive Form Inside Code Cell */
+    .training-form-box {
+        margin-top: 15px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 16px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+    }
+
+    .form-col {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .form-col label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 4px;
+    }
+
+    .form-col select, .form-col input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+
+    .btn-run-cell {
+        background: var(--primary-emerald);
+        color: white;
+        border: none;
+        padding: 9px 20px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+    }
+
+    .btn-run-cell:hover {
+        background: var(--secondary-teal);
+    }
+
+    /* Output Cell */
+    .cell-output-container {
+        flex-grow: 1;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 16px;
+        font-family: "Fira Code", Consolas, Monaco, monospace;
+        font-size: 0.88rem;
+        box-sizing: border-box;
+    }
+
+    .metric-badge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin: 15px 0;
+    }
+
+    .metric-badge-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .metric-badge-card .title {
+        font-size: 0.75rem;
+        color: #64748b;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .metric-badge-card .value {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--primary-emerald);
+        margin-top: 4px;
+    }
+
+    .cm-table {
+        border-collapse: collapse;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .cm-table th, .cm-table td {
+        border: 1px solid #cbd5e1;
+        padding: 8px 12px;
+        text-align: center;
+    }
+
+    .cm-table th {
+        background: #f1f5f9;
+        font-weight: 600;
+    }
+
+    .cm-correct {
+        background: #dcfce7;
+        font-weight: 700;
+        color: #166534;
+    }
+
+    .cm-wrong {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+</style>
+
+<div class="notebook-wrapper">
+    <!-- Notebook Header -->
+    <div class="notebook-header">
+        <div class="notebook-title-area">
+            <div class="notebook-logo">J</div>
+            <h2 class="notebook-filename">Revive_Model_Training.ipynb</h2>
+            <span class="notebook-badge">JupyterLab 4.x Compatible</span>
+        </div>
+        <div class="kernel-status">
+            <div class="kernel-indicator"></div>
+            <span>Python 3.10 (ipykernel) · Idle</span>
+        </div>
+    </div>
+
+    <!-- Notebook Action Toolbar -->
+    <div class="notebook-toolbar">
+        <button class="toolbar-btn" onclick="document.getElementById('training-form').scrollIntoView();"><i class="fa fa-play"></i> Run</button>
+        <button class="toolbar-btn" onclick="location.reload();"><i class="fa fa-refresh"></i> Restart Kernel</button>
+        <a href="{{ url_for('testing_page') }}" class="toolbar-btn" style="text-decoration:none;"><i class="fa fa-check-circle"></i> Open Testing Suite</a>
+        <a href="{{ url_for('evaluation_page') }}" class="toolbar-btn" style="text-decoration:none;"><i class="fa fa-bar-chart"></i> Evaluation Dashboard</a>
+    </div>
+
+    <div class="notebook-body">
+        <!-- Cell 1: Markdown Documentation -->
+        <div class="cell">
+            <div class="prompt"></div>
+            <div class="cell-input-container markdown-cell">
+                <h3 style="color: var(--primary-emerald); margin-top: 0;">1. Revive Machine Learning Pipeline Training</h3>
+                <p style="color: #4b5563; margin-bottom: 0;">
+                    This interactive module executes the end-to-end model training workflow on the real medical datasets located in <code>data/</code>.
+                    Select any disease model below to fit, validate on a holdout test split, serialize to <code>models/</code>, and compute verified evaluation metrics.
+                </p>
+            </div>
+        </div>
+
+        <!-- Cell 2: Code Cell for Training Execution -->
+        <div class="cell active">
+            <div class="prompt">In [1]:</div>
+            <div class="cell-input-container">
+                <div class="code-editor"><span class="comment"># Execute End-to-End Pipeline Training</span>
+<span class="keyword">from</span> src.ml_pipeline <span class="keyword">import</span> train_disease_model, DISEASE_CONFIGS
+
+<span class="comment"># Configure and trigger training on verified clinical datasets</span></div>
+
+                <div class="training-form-box">
+                    <form id="training-form" method="POST" action="{{ url_for('training_page') }}">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="disease_key">Select Target Disease Model</label>
+                                <select name="disease_key" id="disease_key" required>
+                                    {% for key, cfg in configs.items() %}
+                                        {% if cfg.type == 'tabular' %}
+                                            <option value="{{ key }}" {% if selected_disease == key %}selected{% endif %}>
+                                                {{ cfg.display_name }} ({{ cfg.dataset_file }})
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label for="test_size">Test Split Ratio</label>
+                                <select name="test_size" id="test_size">
+                                    <option value="0.2" selected>0.20 (80% Train / 20% Test)</option>
+                                    <option value="0.25">0.25 (75% Train / 25% Test)</option>
+                                    <option value="0.3">0.30 (70% Train / 30% Test)</option>
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label for="n_estimators">Random Forest Estimators</label>
+                                <input type="number" name="n_estimators" id="n_estimators" value="100" min="10" max="300" step="10">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-run-cell" id="run-btn">
+                            <i class="fa fa-play"></i> Run Training Cell
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cell 2 Output: Execution Result -->
+        {% if result %}
+        <div class="cell">
+            <div class="prompt out">Out [1]:</div>
+            <div class="cell-output-container">
+                {% if result.success and result.metrics %}
+                <div style="color: #047857; font-weight: 700; margin-bottom: 10px;">
+                    <i class="fa fa-check-circle"></i> {{ result.message }}
+                </div>
+                <div><b>Target Disease:</b> {{ result.metrics.display_name }}</div>
+                <div><b>Algorithm:</b> {{ result.metrics.algorithm }}</div>
+                <div><b>Dataset:</b> {{ result.metrics.total_samples }} total records ({{ result.metrics.train_samples }} training, {{ result.metrics.test_samples }} testing)</div>
+                <div><b>Execution Time:</b> {{ result.metrics.training_time_seconds }} seconds</div>
+
+                <div class="metric-badge-grid">
+                    <div class="metric-badge-card">
+                        <div class="title">Test Accuracy</div>
+                        <div class="value">{{ result.metrics.test_accuracy }}%</div>
+                    </div>
+                    <div class="metric-badge-card">
+                        <div class="title">Precision</div>
+                        <div class="value">{{ result.metrics.precision }}%</div>
+                    </div>
+                    <div class="metric-badge-card">
+                        <div class="title">Recall</div>
+                        <div class="value">{{ result.metrics.recall }}%</div>
+                    </div>
+                    <div class="metric-badge-card">
+                        <div class="title">F1-Score</div>
+                        <div class="value">{{ result.metrics.f1_score }}%</div>
+                    </div>
+                    {% if result.metrics.roc_auc %}
+                    <div class="metric-badge-card">
+                        <div class="title">ROC-AUC</div>
+                        <div class="value">{{ result.metrics.roc_auc }}%</div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <b>Confusion Matrix (Holdout Test Set):</b>
+                    <table class="cm-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Pred: Healthy (0)</th>
+                                <th>Pred: Disease (1)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Actual: Healthy (0)</th>
+                                <td class="cm-correct">{{ result.metrics.confusion_matrix.tn }} (TN)</td>
+                                <td class="cm-wrong">{{ result.metrics.confusion_matrix.fp }} (FP)</td>
+                            </tr>
+                            <tr>
+                                <th>Actual: Disease (1)</th>
+                                <td class="cm-wrong">{{ result.metrics.confusion_matrix.fn }} (FN)</td>
+                                <td class="cm-correct">{{ result.metrics.confusion_matrix.tp }} (TP)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 15px; font-size: 0.85rem; color: #4b5563;">
+                    <i class="fa fa-floppy-o mr-1 text-success"></i> Model artifact saved to <code>models/{{ configs[result.metrics.disease_key].model_file }}</code> at {{ result.metrics.timestamp }}.
+                </div>
+                {% else %}
+                <div style="color: #dc2626; font-weight: 700;">
+                    <i class="fa fa-exclamation-triangle"></i> {{ result.message or "Training execution encountered an error." }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Cell 3: Markdown Cell for Next Steps -->
+        <div class="cell">
+            <div class="prompt"></div>
+            <div class="cell-input-container markdown-cell">
+                <h4 style="color: var(--secondary-teal); margin-top: 0;">2. Pipeline Validation & Quality Assurance</h4>
+                <p style="color: #4b5563;">
+                    Once trained, navigate to the <a href="{{ url_for('testing_page') }}">Testing Suite</a> to evaluate individual test samples or run batch predictions, or view the <a href="{{ url_for('evaluation_page') }}">Comprehensive Evaluation Dashboard</a> to compare all models.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

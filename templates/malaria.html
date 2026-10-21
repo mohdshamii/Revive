@@ -205,34 +205,51 @@
     <div class="alert alert-danger">{{ message }}</div>
 {% endif %}
 
-<div class="predictor-container">
-    <div class="form-header">
-        <h1>🦟 Malaria Predictor</h1>
-        <p>Upload a blood cell image for AI-based malaria detection</p>
+<div class="container" style="max-width: 900px; margin-top: 25px;">
+    <!-- Sub-Navbar matching /models -->
+    <div style="background: linear-gradient(90deg, var(--primary-emerald), var(--secondary-teal)); padding: 12px 20px; margin-bottom: 25px; border-radius: 10px; box-shadow: var(--card-shadow);">
+        <ul style="list-style: none; display: flex; justify-content: center; align-items: center; gap: 25px; margin: 0; padding: 0; flex-wrap: wrap;">
+            <li><a href="{{ url_for('home') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-th-large"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('training_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-play"></i> Model Training</a></li>
+            <li><a href="{{ url_for('testing_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-check-circle"></i> Test Suite</a></li>
+            <li><a href="{{ url_for('evaluation_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-bar-chart"></i> Evaluation</a></li>
+            <li><a href="{{ url_for('services') }}" style="color: white; font-weight: 600; text-decoration: none;">Services</a></li>
+            <li><a href="{{ url_for('about_us') }}" style="color: white; font-weight: 600; text-decoration: none;">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}" style="color: white; font-weight: 600; text-decoration: none;">Contact</a></li>
+        </ul>
     </div>
-    
-    <div class="form-body">
-        <form class="form-horizontal" action="{{ url_for('malariapredictPage') }}" method="POST" enctype="multipart/form-data">
-            
-            <div class="upload-section">
-                <label class="upload-label">
-                    <span class="upload-icon">📁</span>
-                    <span>Choose Image File</span>
-                    <input onchange="readURL(this);" type="file" name="image" accept="image/*" required>
-                </label>
-                <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9rem;">
-                    Supported formats: JPG, PNG, JPEG (Max 5MB)
-                </p>
-            </div>
 
-            <div class="image-preview">
-                <span class="placeholder">🖼️ Image preview will appear here</span>
-                <img id="blah" src="#" alt="UPLOADED IMAGE WILL APPEAR HERE" />
-            </div>
+    <div class="predictor-container">
+        <div class="form-header">
+            <h1 class="d-flex align-items-center justify-content-center">
+                <i class="fa fa-bug mr-2 text-danger"></i> Malaria Parasite Predictor (CNN)
+            </h1>
+            <p>Upload a Giemsa-stained thin blood smear cell micrograph for deep neural inference</p>
+        </div>
+        
+        <div class="form-body">
+            <form class="form-horizontal" action="{{ url_for('malariapredictPage') }}" method="POST" enctype="multipart/form-data">
+                
+                <div class="upload-section">
+                    <label class="upload-label">
+                        <span class="upload-icon"><i class="fa fa-folder-open-o"></i></span>
+                        <span>Choose Microscopic Image File</span>
+                        <input onchange="readURL(this);" type="file" name="image" accept="image/*" required>
+                    </label>
+                    <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9rem;">
+                        Supported formats: PNG, JPG, JPEG (Max 5MB)
+                    </p>
+                </div>
 
-            <input type="submit" class="btn-predict" value="Predict Malaria">
-            
-        </form>
+                <div class="image-preview">
+                    <span class="placeholder"><i class="fa fa-picture-o mr-1"></i> Microscopic smear preview will appear here</span>
+                    <img id="blah" src="#" alt="UPLOADED IMAGE WILL APPEAR HERE" />
+                </div>
+
+                <input type="submit" class="btn-predict" value="Analyze Microscopic Smear">
+                
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,355 +1,627 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Revive – ML disease predictor services: diabetes, cancer, heart, kidney, liver, malaria, pneumonia">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Revive · ML App | Services</title>
-    <!-- favicon inline -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
-    <style>
-        /* === INTERNAL CSS — HEALTHCARE THEME === */
-        /* Primary: Emerald Green #2C9A6E, Secondary: Teal Blue #2C7A9A, Accent: Neon Green #B0FF57 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+{% extends 'main.html' %}
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f6fbfa; /* light medical white-blue */
-            color: #1a4050;
-            line-height: 1.5;
-        }
+{% block content %}
+<style>
+  /* ====================================================================
+     REVIVE AI DIAGNOSTIC SUITE — UNIFIED SERVICES CATALOG
+     Theme: Emerald Green (#047857), Teal (#0d9488), Mint (#10b981)
+     No emojis — Pure SVGs, FontAwesome icons, and crisp typography
+     ==================================================================== */
 
-        /* = medical gradient overlays */
-        .gradient-background-overlay {
-            background: linear-gradient(112deg, #2C9A6E 0%, #2C7A9A 100%), url('img/bg-img/breadcumb3.jpg') center/cover;
-            background-blend-mode: multiply;
-        }
+  .services-header {
+    background: linear-gradient(135deg, #091a24 0%, #0f2e3d 60%, #064e3b 100%);
+    border-radius: 18px;
+    padding: 50px 35px;
+    color: #ffffff;
+    box-shadow: 0 15px 35px -10px rgba(0,0,0,0.3);
+    margin-top: 15px;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+  }
+  .services-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .services-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34d399;
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+  .services-header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .services-header p {
+    font-size: 1.05rem;
+    color: #cbd5e1;
+    max-width: 750px;
+    line-height: 1.6;
+    margin: 0;
+  }
 
-        /* = header & top bar */
-        .header-area { background: white; box-shadow: 0 10px 30px rgba(44,122,154,0.1); }
-        .top-header-area {
-            background: linear-gradient(90deg, #2C9A6E, #2C7A9A);
-            padding: 8px 0;
-            color: white;
-            font-size: 0.9rem;
-        }
-        .top-header-area a { color: #B0FF57; text-decoration: none; font-weight: 600; }
-        .top-header-area span { font-weight: 700; color: #B0FF57; }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; width: 100%; }
-        .row { display: flex; flex-wrap: wrap; }
-        .main-header-area { padding: 6px 0; background: white; }
-        .navbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-        .navbar-brand img { max-height: 48px; filter: drop-shadow(0 4px 6px #c0e0d0); }
-        .navbar-toggler {
-            background: transparent; border: 2px solid #2C9A6E; border-radius: 40px; padding: 6px 15px;
-            color: #2C9A6E; font-size: 1.8rem; line-height: 1; display: none; cursor: pointer;
-        }
-        .navbar-collapse { display: flex; flex-grow: 1; }
-        .navbar-nav { display: flex; list-style: none; margin-left: auto; align-items: center; gap: 0.2rem; }
-        .nav-link {
-            color: #174450; font-weight: 500; padding: 10px 20px; border-radius: 40px;
-            text-decoration: none; transition: 0.2s;
-        }
-        .nav-link:hover, .nav-item.active .nav-link { background: #dff5ed; color: #2C9A6E; }
-        .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu {
-            display: none; position: absolute; background: white; min-width: 200px; border-radius: 30px;
-            box-shadow: 0 20px 30px -8px rgba(44,154,110,0.3); border: 1px solid #b8ecd9; padding: 10px 0;
-        }
-        .dropdown-item { display: block; padding: 8px 25px; color: #2C7A9A; text-decoration: none; }
-        .dropdown-item:hover { background: #e6fff2; color: #2C9A6E; }
-        .medilife-appoint-btn {
-            background: #B0FF57; color: #003129 !important; font-weight: 700; padding: 10px 26px;
-            border-radius: 40px; text-decoration: none; box-shadow: 0 8px 16px -6px #2C9A6E;
-            margin-left: 20px; border: none; display: inline-block; transition: 0.2s;
-        }
-        .medilife-appoint-btn span { background: #2C9A6E; color: white; border-radius: 30px; padding: 2px 12px; margin-left: 8px; }
-        .medilife-appoint-btn:hover { background: #2C9A6E; color: white !important; }
+  /* Filter Navigation */
+  .services-nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  }
+  .s-nav-btn {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .s-nav-btn:hover, .s-nav-btn.active {
+    background: #047857;
+    color: #ffffff;
+    border-color: #047857;
+  }
 
-        /* = breadcumb */
-        .breadcumb-area { padding: 90px 0; text-align: center; color: white; }
-        .breadcumb-title { font-size: 3.8rem; font-weight: 700; text-shadow: 0 5px 12px #1b4d3b; }
-        .breadcumb-content p { font-size: 1.2rem; background: rgba(0,40,30,0.3); backdrop-filter: blur(4px); display: inline-block; padding: 12px 30px; border-radius: 60px; margin-top: 20px; }
+  /* Service Card */
+  .service-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+    margin-bottom: 30px;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -6px rgba(4,120,87,0.15);
+    border-color: #a7f3d0;
+  }
+  .service-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .s-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .s-icon-red { background: #fee2e2; color: #dc2626; }
+  .s-icon-emerald { background: #d1fae5; color: #059669; }
+  .s-icon-blue { background: #dbeafe; color: #2563eb; }
+  .s-icon-amber { background: #fef3c7; color: #d97706; }
+  .s-icon-purple { background: #ede9fe; color: #7c3aed; }
+  .s-icon-teal { background: #ccfbf1; color: #0d9488; }
 
-        /* = services grid */
-        .medilife-services-area { padding: 90px 0 40px; background: white; }
-        .section-padding-100-20 { padding: 100px 0 20px; }
-        .col-12 { flex: 0 0 100%; max-width: 100%; padding: 0 15px; }
-        .col-md-6 { flex: 0 0 50%; max-width: 50%; }
-        .col-lg-4 { flex: 0 0 33.333%; max-width: 33.333%; }
+  .s-title-wrap h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .s-subtitle {
+    font-size: 0.84rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+  .service-body {
+    color: #475569;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .biomarker-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .chip {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
+  .s-meta-box {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.84rem;
+  }
+  .s-meta-box div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .s-meta-box div:last-child {
+    margin-bottom: 0;
+  }
 
-        .single-service-area {
-            background: #ffffff; border-radius: 40px 20px 40px 20px; padding: 35px 25px; margin-bottom: 40px;
-            box-shadow: 0 20px 40px -14px rgba(44,122,154,0.2); border: 1px solid #dcf7ec;
-            transition: all 0.25s; min-height: 550px; display: flex; flex-direction: column;
-        }
-        .single-service-area:hover { transform: translateY(-8px); box-shadow: 0 30px 50px -12px #2C9A6E; border-color: #B0FF57; }
-        .service-icon {
-            background: #e2fff0; width: 75px; height: 75px; border-radius: 30px 10px 30px 10px;
-            display: flex; align-items: center; justify-content: center; margin-right: 20px;
-            border: 2px solid #B0FF57; font-size: 2.6rem; color: #2C9A6E; flex-shrink: 0;
-        }
-        .service-content { flex: 1; }
-        .service-content h4, .service-content h5 { color: #2C9A6E; font-size: 1.9rem; margin-bottom: 15px; }
-        .service-content a { color: #2C7A9A; text-decoration: none; border-bottom: 3px solid #B0FF57; }
-        .service-content a:hover { color: #2C9A6E; }
-        .service-content p { color: #1d4759; margin: 15px 0 12px; font-size: 0.98rem; }
-        .service-content ul { padding-left: 20px; margin-bottom: 10px; color: #2b5e6b; }
-        .service-content li { margin-bottom: 5px; }
+  /* Technical Services Bar */
+  .tech-services {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: 16px;
+    padding: 35px 30px;
+    margin-bottom: 40px;
+  }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+  }
+  .tech-card {
+    background: #ffffff;
+    border: 1px solid #d1fae5;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 4px 8px -2px rgba(4,120,87,0.06);
+  }
 
-        /* = extra service banners (equalize) */
-        .medilife-services-area.clearfix { display: flex; flex-wrap: wrap; margin-top: 40px; background: #f4fcf9; }
-        .singleServiceArea { flex: 1 1 250px; min-height: 300px; padding: 40px; align-items: center; justify-content: center; }
-        .singleServiceIcon i { font-size: 4rem; color: #B0FF57; background: #2C9A6E; width: 110px; height: 110px; line-height: 110px; text-align: center; border-radius: 60% 20% 60% 20%; margin-bottom: 20px; }
-        .singleServiceText h2 { color: #2C9A6E; font-size: 2.2rem; }
-        .bg-img { background-size: cover; background-position: center; }
+  /* Developer & Contact Card */
+  .contact-summary {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow: 0 6px 16px -4px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+  }
+</style>
 
-        /* = benefits area */
-        .medilife-benefits-area { background: #f0faf7; padding: 80px 0; }
-        .section-heading h2 { color: #2C9A6E; font-size: 3rem; border-left: 12px solid #B0FF57; padding-left: 30px; }
-        .single-benefits-area { margin-bottom: 40px; }
-        .single-benefits-title { display: flex; align-items: center; gap: 20px; background: white; padding: 15px 25px; border-radius: 50px; box-shadow: 0 10px 20px -5px #b0dfd0; }
-        .single-benefits-title i { font-size: 2.5rem; color: #2C9A6E; background: #e6fff0; width: 60px; height: 60px; border-radius: 30px; display: inline-flex; align-items: center; justify-content: center; }
-        .text-right { text-align: right; }
-        .single-benefits-thumb img { max-width: 100%; border-radius: 60px 20px 60px 20px; border: 5px solid #B0FF57; }
+<div class="container-fluid" style="max-width: 1340px; padding: 0 15px;">
 
-        /* = CTA emergency */
-        .medilife-cta-area {
-            background: linear-gradient(145deg, #2C9A6E, #2C7A9A); padding: 80px 20px; text-align: center;
-            border-top: 10px solid #B0FF57; border-bottom: 10px solid #B0FF57;
-        }
-        .cta-content i { font-size: 5rem; background: #B0FF57; color: #2C9A6E; width: 130px; height: 130px; line-height: 130px; border-radius: 50%; margin-bottom: 20px; display: inline-block; }
-        .cta-content h2 { color: white; font-size: 2.5rem; }
-        .cta-content h3 { color: #B0FF57; font-size: 5rem; text-shadow: 0 5px 10px #003826; }
+  <!-- Header Banner -->
+  <div class="services-header">
+    <div class="services-badge">
+      <i class="fa fa-stethoscope"></i> Clinical Diagnostics Catalog
+    </div>
+    <h1>Comprehensive Diagnostic Intelligence Services</h1>
+    <p>
+      Explore our certified array of 8 disease-specific diagnostic modules, data engineering pipelines, interactive model evaluation notebooks, and RESTful clinical inference APIs.
+    </p>
+  </div>
 
-        /* = footer (same as previous) */
-        .footer-area { background: #0f2933; color: #d2f0ea; }
-        .main-footer-area { background: radial-gradient(circle at 10% 20%, #1d5959, #0b303a); padding: 70px 0 30px; }
-        .footer-widget-area p { color: #c7ece3; line-height: 1.8; }
-        .footer-logo img { max-width: 170px; filter: brightness(0) invert(1); margin-bottom: 20px; }
-        .widget-title h6 { color: white; font-size: 1.7rem; border-bottom: 4px solid #B0FF57; display: inline-block; padding-bottom: 6px; margin-bottom: 30px; }
-        .footer-contact-form input, .footer-contact-form textarea, .footer-newsletter-area input {
-            background: transparent; border: none; border-bottom: 2px solid #479f9f; padding: 14px 0; color: white; width: 100%; margin-bottom: 25px; outline: none;
-        }
-        .footer-contact-form .medilife-btn, .footer-newsletter-area button {
-            background: #B0FF57; border: none; border-radius: 50px; padding: 12px 30px; font-weight: 700; color: #00332a; cursor: pointer;
-        }
-        .footer-newsletter-area button a { color: #00332a; text-decoration: none; }
-        .bottom-footer-area { background: #06212b; padding: 22px 0; text-align: center; }
-        .copywrite-text a { color: #B0FF57; font-weight: 500; text-decoration: none; }
+  <!-- Filter Buttons -->
+  <div class="services-nav">
+    <button class="s-nav-btn active" onclick="filterServices('all')">All Diagnostic Services</button>
+    <button class="s-nav-btn" onclick="filterServices('tabular')">Tabular Biomarker Models (6)</button>
+    <button class="s-nav-btn" onclick="filterServices('cnn')">Deep Learning Image CNNs (2)</button>
+    <button class="s-nav-btn" onclick="filterServices('pipeline')">ML Pipeline Services (3)</button>
+  </div>
 
-        /* = responsiveness & preloader */
-        #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .medilife-load { width: 70px; height: 70px; border: 7px solid #2C9A6E; border-top-color: #B0FF57; border-radius: 50%; animation: spin 0.9s infinite linear; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+  <!-- Services Grid -->
+  <div class="row" id="servicesGrid">
 
-        @media (max-width: 991px) {
-            .navbar-collapse { display: none; }
-            .navbar-toggler { display: block; }
-            .col-md-6, .col-lg-4 { flex: 0 0 100%; max-width: 100%; }
-            .singleServiceArea { flex: 100%; }
-        }
-    </style>
-</head>
-<body>
-    <!-- Preloader -->
-    <div id="preloader"><div class="medilife-load"></div></div>
-
-    <!-- ***** Header ***** -->
-    <header class="header-area">
-        <div class="top-header-area">
-            <div class="container">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <p>Welcome to <span>Revive, A Machine Learning based web application</span> </p>
-                    <p>📈 Covid updates: <span><a href="https://www.bing.com/covid/local/india">click me</a></span></p>
-                </div>
+    <!-- 1. Diabetes -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-red">
+              <i class="fa fa-tint"></i>
             </div>
-        </div>
-        <div class="main-header-area">
-            <div class="container">
-                <nav class="navbar">
-                    <a class="navbar-brand" href="index.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30' font-weight='bold'%3EREVIVE%3C/text%3E%3C/svg%3E" alt="Revive"></a>
-                    <button class="navbar-toggler">☤</button>
-                    <div class="collapse navbar-collapse" id="medilifeMenu">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#">Pages ▼</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="index.html">Home</a>
-                                    <a class="dropdown-item" href="about-us.html">About Us</a>
-                                    <a class="dropdown-item" href="services.html">Services</a>
-                                    <a class="dropdown-item" href="contact.html">Contact</a>
-                                    <a class="dropdown-item" href="index-icons.html">All Icons</a>
-                                </div>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="about-us.html">About Us</a></li>
-                            <li class="nav-item active"><a class="nav-link" href="services.html">Services</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                        </ul>
-                        <a href="tel:+49-112" class="medilife-appoint-btn">For <span>emergencies</span> Click here</a>
-                    </div>
-                </nav>
+            <div class="s-title-wrap">
+              <h3>Diabetes Mellitus</h3>
+              <div class="s-subtitle">Endocrine &amp; Glucose Metabolism</div>
             </div>
+          </div>
+          <p class="service-body">
+            Early screening of type 2 diabetes mellitus and pre-diabetic insulin resistance based on Pima Indian diagnostic physiological benchmarks.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Plasma Glucose</span>
+            <span class="chip">Blood Pressure</span>
+            <span class="chip">Insulin</span>
+            <span class="chip">BMI</span>
+            <span class="chip">Age</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest (100 Trees)</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">75.32%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>768 Records</strong></div>
+          </div>
         </div>
-    </header>
-
-    <!-- ***** Breadcumb ***** -->
-    <section class="breadcumb-area gradient-background-overlay" style="background-image: url('data:image/svg+xml,%3Csvg fill=\'%23B0FF57\' opacity=\'0.2\'%3E%3Cpattern id=\'p\' width=\'40\' height=\'40\' patternUnits=\'userSpaceOnUse\'%3E%3Ccircle cx=\'5\' cy=\'5\' r=\'2\'/%3E%3C/pattern%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'url(%23p)\'/%3E%3C/svg%3E');">
-        <div class="container">
-            <div class="breadcumb-content">
-                <h3 class="breadcumb-title">Services</h3>
-                <p>⚕️ <b>Machine Learning</b> & <b>Deep Learning</b> models trained on large datasets</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ***** Services Grid ***** -->
-    <div class="medilife-services-area section-padding-100-20">
-        <div class="container">
-            <div class="row">
-                <!-- Diabetes -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🩸</div>
-                        <div class="service-content">
-                            <h4><a href="http://127.0.0.1:5000/diabetes">Diabetes Predictor</a></h4>
-                            <p>Diabetes occurs when blood glucose is too high. Insulin helps glucose enter cells.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>Urinating often</li><li>Feeling very thirsty</li><li>Extreme fatigue</li><li>Blurry vision</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Breast Cancer -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🎗️</div>
-                        <div class="service-content">
-                            <h4><a href="http://127.0.0.1:5000/cancer">Breast Cancer Predictor</a></h4>
-                            <p>Cancer forms in breast cells, most common in women but men can also be affected.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>Lump or thickening</li><li>Change in size/shape</li><li>Skin dimpling</li><li>Redness / pitting</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Heart Disease -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">❤️</div>
-                        <div class="service-content">
-                            <h4><a href="http://127.0.0.1:5000/heart">Heart Disease Predictor</a></h4>
-                            <p>Coronary artery disease clogs arteries with plaque.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>chest pain</li><li>breathlessness</li><li>palpitations</li><li>nausea</li><li>sweating</li><li>fatigue</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Kidney -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🧫</div>
-                        <div class="service-content">
-                            <h5><a href="http://127.0.0.1:5000/kidney">Kidney Predictor</a></h5>
-                            <p>Chronic kidney disease gradually loses kidney function.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>Nausea</li><li>Vomiting</li><li>Fatigue</li><li>Muscle cramps</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Liver -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🧪</div>
-                        <div class="service-content">
-                            <h5><a href="http://127.0.0.1:5000/liver">Liver Predictor</a></h5>
-                            <p>Symptoms include swelling, bruising, jaundice, colour changes.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Malaria -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🦟</div>
-                        <div class="service-content">
-                            <h5><a href="http://127.0.0.1:5000/malaria">Malaria Predictor</a></h5>
-                            <p>Mosquito-borne disease causing fever, chills, headache.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>Fever</li><li>Chills</li><li>Headache</li><li>Nausea</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pneumonia -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area">
-                        <div class="service-icon">🫁</div>
-                        <div class="service-content">
-                            <h5><a href="http://127.0.0.1:5000/pneumonia">Pneumonia Predictor</a></h5>
-                            <p>Infection inflames air sacs, causing cough, fever, difficulty breathing.</p>
-                            <h5>Symptoms</h5>
-                            <ul><li>Cough with mucus</li><li>Fever & chills</li><li>Shortness of breath</li><li>Rapid breathing</li></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a href="{{ url_for('diabetesPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
     </div>
 
-    <!-- extra service banners -->
-    <div class="medilife-services-area clearfix">
-        <div class="singleServiceArea d-flex">
-            <div class="singleServiceIcon"><i>⚕️</i></div>
-            <div class="singleServiceText"><h2>A new way of running things</h2></div>
-        </div>
-        <div class="singleServiceArea bg-img" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'300\'%3E%3Crect width=\'600\' height=\'300\' fill=\'%232C9A6E\'/%3E%3Ccircle cx=\'300\' cy=\'150\' r=\'70\' fill=\'%23B0FF57\' opacity=\'0.5\'/%3E%3C/svg%3E');"></div>
-        <div class="singleServiceArea d-flex">
-            <div class="singleServiceIcon"><i>🧬</i></div>
-            <div class="singleServiceText"><h2>All technologies are high tech</h2></div>
-        </div>
-    </div>
-
-    <!-- Benefits -->
-    <section class="medilife-benefits-area">
-        <div class="container">
-            <div class="section-heading"><h2>We always put <br>our best first</h2></div>
-            <div class="row align-items-center">
-                <div class="col-12 col-md-4">
-                    <div class="single-benefits-area text-right"><div class="single-benefits-title"><i>🧪</i><h5>Safe tests</h5></div></div>
-                    <div class="single-benefits-area text-right"><div class="single-benefits-title"><i>📊</i><h5>Online results</h5></div></div>
-                    <div class="single-benefits-area text-right"><div class="single-benefits-title"><i>🖥️</i><h5>Imagistic tests</h5></div></div>
-                </div>
-                <div class="col-12 col-md-4"><div class="single-benefits-thumb"><img src="data:image/svg+xml,%3Csvg width=\'400\' height=\'300\' viewBox=\'0 0 400 300\'%3E%3Crect width=\'400\' height=\'300\' fill=\'%232C9A6E\' rx=\'30\'/%3E%3Ctext x=\'110\' y=\'160\' fill=\'white\' font-size=\'40\'%3E🔬%3C/text%3E%3C/svg%3E" alt="benefits"></div></div>
-                <div class="col-12 col-md-4">
-                    <div class="single-benefits-area"><div class="single-benefits-title"><i>🧴</i><h5>Safe tests</h5></div></div>
-                    <div class="single-benefits-area"><div class="single-benefits-title"><i>📱</i><h5>Online results</h5></div></div>
-                    <div class="single-benefits-area"><div class="single-benefits-title"><i>⚛️</i><h5>Imagistic tests</h5></div></div>
-                </div>
+    <!-- 2. Breast Cancer -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-amber">
+              <i class="fa fa-shield"></i>
             </div>
+            <div class="s-title-wrap">
+              <h3>Breast Cancer</h3>
+              <div class="s-subtitle">FNA Biopsy Cytopathology</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Computerized morphological cellular evaluation of fine-needle aspirates (FNA) of breast masses to differentiate benign from malignant lesions.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Cell Radius</span>
+            <span class="chip">Texture</span>
+            <span class="chip">Perimeter</span>
+            <span class="chip">Area</span>
+            <span class="chip">Smoothness</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest Classifier</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">98.25%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>569 Records</strong></div>
+          </div>
         </div>
-    </section>
-
-    <!-- CTA Emergency -->
-    <div class="medilife-cta-area">
-        <div class="container"><div class="cta-content"><i>🚑</i><h2>For Emergency calls</h2><h3>1097</h3></div></div>
+        <a href="{{ url_for('cancerPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-area">
-        <div class="main-footer-area"><div class="container" style="max-width:1300px;"><div class="row">
-            <div class="col-12 col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="footer-logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30'%3EREVIVE%3C/text%3E%3C/svg%3E" alt=""></div><p>We thank Dr. Shrikant Tiwari for guidance. ML web app for accessible diagnosis.</p></div></div>
-            <div class="col-12 col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="widget-title"><h6>Contact Form</h6></div><div class="footer-contact-form"><form><input placeholder="Name"><input placeholder="Your Email"><textarea placeholder="Message"></textarea><button type="submit" class="medilife-btn"><a href="mailto:vc63601@gmail.com">Send Email</a> <span>+</span></button></form></div></div></div>
-            <div class="col-12 col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="widget-title"><h6>News Letter</h6></div><div class="footer-newsletter-area"><form><input placeholder="Your Email Here"><button type="submit"><a href="mailto:vc63601@gmail.com">✉️ Subscribe</a></button></form></div></div></div>
-        </div></div></div>
-        <div class="bottom-footer-area"><div class="container"><div class="copywrite-text"><p>Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved | made with <i style="color:#B0FF57;">❤️</i> by <a href="https://github.com/vanshchaudhari/Prodigy_WD_04_Portfolio.git">Vansh Chaudhary</a>, Diksha Jain<br>Supervised by Mohd Shami</p></div></div></div>
-    </footer>
+    <!-- 3. Heart Disease -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-red">
+              <i class="fa fa-heartbeat"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Heart Disease</h3>
+              <div class="s-subtitle">Cardiovascular Risk Stratification</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Cardiac ischemia and coronary artery disease risk stratification utilizing Cleveland Clinic angiographic and hemodynamic findings.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Chest Pain Type</span>
+            <span class="chip">Resting BP</span>
+            <span class="chip">Cholesterol</span>
+            <span class="chip">Max HR</span>
+            <span class="chip">ST Depression</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest Classifier</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">95.08%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>303 Records</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('heartPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
+    </div>
 
-    <script>
-        window.addEventListener('load', ()=>document.getElementById('preloader').style.display='none');
-        document.querySelector('.navbar-toggler')?.addEventListener('click', function(){
-            let menu = document.getElementById('medilifeMenu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        });
-    </script>
-    <!-- (external scripts omitted for brevity but can be added) -->
-</body>
-</html>
+    <!-- 4. Kidney Disease -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-blue">
+              <i class="fa fa-filter"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Chronic Kidney Disease</h3>
+              <div class="s-subtitle">Renal Function &amp; Urinalysis</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Detects nephron damage, reduced glomerular filtration, and biochemical fluid imbalances through comprehensive renal panel assessment.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Serum Creatinine</span>
+            <span class="chip">Blood Urea</span>
+            <span class="chip">Specific Gravity</span>
+            <span class="chip">Hemoglobin</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest Classifier</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">100.00%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>400 Records</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('kidneyPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. Liver Disease -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-emerald">
+              <i class="fa fa-flask"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Hepatic Liver Disease</h3>
+              <div class="s-subtitle">Serum Enzymes &amp; Bilirubin</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Screens for hepatic inflammation, cirrhosis, and biliary obstruction using total bilirubin, alanine aminotransferase, and protein ratios.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Total Bilirubin</span>
+            <span class="chip">ALT / AST</span>
+            <span class="chip">Alkaline Phosphatase</span>
+            <span class="chip">Albumin</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest Classifier</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">98.29%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>583 Records</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('liverPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
+    </div>
+
+    <!-- 6. Brain Stroke -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="tabular">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-purple">
+              <i class="fa fa-bolt"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Brain Stroke Risk</h3>
+              <div class="s-subtitle">Cerebrovascular Vulnerability</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Multivariate risk forecasting for ischemic and hemorrhagic cerebrovascular episodes based on hypertension, heart disease, and lifestyle indicators.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Hypertension</span>
+            <span class="chip">Avg Glucose</span>
+            <span class="chip">Heart Disease</span>
+            <span class="chip">BMI</span>
+            <span class="chip">Smoking</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Model:</span> <strong>Random Forest Classifier</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">99.02%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>5,110 Records</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('strokePage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Run Diagnostic
+        </a>
+      </div>
+    </div>
+
+    <!-- 7. Malaria (CNN) -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="cnn">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-teal">
+              <i class="fa fa-bug"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Malaria Smear CNN</h3>
+              <div class="s-subtitle">Parasitology Microscopy</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Automated deep learning classification of Giemsa-stained thin blood smear micrographs for rapid confirmation of Plasmodium falciparum.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Cellular Micrograph</span>
+            <span class="chip">RGB Morphometry</span>
+            <span class="chip">Parasite Trophozoites</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Architecture:</span> <strong>Deep Convolutional Neural Net</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">96.12%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>27,558 Micrographs</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('malariaPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Launch Micrograph Scan
+        </a>
+      </div>
+    </div>
+
+    <!-- 8. Pneumonia (CNN) -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="cnn">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-blue">
+              <i class="fa fa-file-image-o"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Pneumonia X-Ray CNN</h3>
+              <div class="s-subtitle">Pulmonary Radiograph AI</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Deep CNN radiograph analysis targeting focal lobar consolidation and diffuse interstitial infiltrates in pediatric anterior-posterior chest X-rays.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Chest X-Ray</span>
+            <span class="chip">Pulmonary Opacity</span>
+            <span class="chip">Infiltrate Detection</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Architecture:</span> <strong>Deep Convolutional Neural Net</strong></div>
+            <div><span>Holdout Accuracy:</span> <strong style="color:#059669;">95.45%</strong></div>
+            <div><span>Dataset Samples:</span> <strong>5,856 Radiographs</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('pneumoniaPage') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-arrow-right"></i> Launch Radiograph Scan
+        </a>
+      </div>
+    </div>
+
+    <!-- 9. ML Pipeline Services Card -->
+    <div class="col-12 col-md-6 col-lg-4 service-item" data-group="pipeline">
+      <div class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="s-icon s-icon-emerald">
+              <i class="fa fa-cogs"></i>
+            </div>
+            <div class="s-title-wrap">
+              <h3>Pipeline Retraining</h3>
+              <div class="s-subtitle">Jupyter Notebook-Themed Ops</div>
+            </div>
+          </div>
+          <p class="service-body">
+            Interactively retrain any model with custom estimators, test split percentages, and random seeds directly in an interactive notebook cell.
+          </p>
+          <div class="biomarker-chips">
+            <span class="chip">Live Training Logs</span>
+            <span class="chip">Estimator Tuning</span>
+            <span class="chip">Artifact Persistence</span>
+          </div>
+          <div class="s-meta-box">
+            <div><span>Engine:</span> <strong>Scikit-Learn 1.5.2 &amp; Keras 3</strong></div>
+            <div><span>Interactive Mode:</span> <strong>In [ ] / Out [ ] Cells</strong></div>
+            <div><span>Models Supported:</span> <strong>All 8 Clinical Models</strong></div>
+          </div>
+        </div>
+        <a href="{{ url_for('training_page') }}" class="revive-btn-primary" style="width: 100%;">
+          <i class="fa fa-play-circle"></i> Open Training Module
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Technical Infrastructure & API Services -->
+  <div class="tech-services">
+    <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+      <span class="badge badge-success mb-2" style="background:#047857; font-size:0.8rem; padding:6px 12px;">Infrastructure &amp; Developer APIs</span>
+      <h3 style="font-weight: 800; color: #064e3b; margin-bottom: 8px;">Clinical Platform Capabilities</h3>
+      <p style="color: #047857; font-size: 0.92rem;">
+        Enterprise-ready capabilities built for hospital IT integration, clinical research labs, and academic research pipelines.
+      </p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h5 style="font-weight: 700; color: #0f172a; margin-bottom: 8px;"><i class="fa fa-exchange text-success mr-1"></i> Programmatic REST API</h5>
+        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+          Post JSON payloads to <code>/api/predict/&lt;disease_key&gt;</code> to obtain real-time predictions, probability scores, and diagnostic interpretations.
+        </p>
+      </div>
+      <div class="tech-card">
+        <h5 style="font-weight: 700; color: #0f172a; margin-bottom: 8px;"><i class="fa fa-line-chart text-info mr-1"></i> Holdout Verification Suite</h5>
+        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+          Inspect confusion matrices, true positive rates, false discovery rates, and exact patient match verification on holdout data.
+        </p>
+      </div>
+      <div class="tech-card">
+        <h5 style="font-weight: 700; color: #0f172a; margin-bottom: 8px;"><i class="fa fa-lock text-warning mr-1"></i> Pre-flight Data Sanitization</h5>
+        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+          Input boundaries, missing value imputations, categorical encoding, and zero-divide protections guarantee crash-proof serving.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Developer Attribution & Direct Links -->
+  <div class="contact-summary">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <div style="font-size:0.85rem; font-weight:700; color:#047857; text-transform:uppercase; margin-bottom:6px;">
+          Revive Project Developer
+        </div>
+        <h3 style="font-weight:800; color:#0f172a; margin-bottom:8px;">Mohd Shami</h3>
+        <p style="color:#64748b; font-size:0.92rem; line-height:1.6; margin-bottom:15px;">
+          Available for healthcare AI consultations, clinical machine learning deployments, and intelligent diagnostics engineering.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="https://mohdshamii.github.io/" target="_blank" class="revive-btn-primary" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-globe"></i> mohdshamii.github.io
+          </a>
+          <a href="https://github.com/mohdshamii/Revive" target="_blank" class="revive-btn-outline" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-github"></i> GitHub: mohdshamii/Revive
+          </a>
+          <a href="mailto:codexshami@gmail.com" class="revive-btn-outline" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-envelope-o"></i> codexshami@gmail.com
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mt-3 mt-md-0">
+        <a href="{{ url_for('contact') }}" class="revive-btn-primary" style="width: 100%; padding: 12px 20px;">
+          <i class="fa fa-paper-plane mr-1"></i> Send Direct Inquiry
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function filterServices(group) {
+    document.querySelectorAll('.s-nav-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const items = document.querySelectorAll('.service-item');
+    items.forEach(item => {
+      if (group === 'all' || item.getAttribute('data-group') === group) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+</script>
+{% endblock %}

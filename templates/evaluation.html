@@ -1,0 +1,370 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    :root {
+        --nb-bg: #f7f9fa;
+        --nb-border: #cfd8dc;
+        --nb-prompt: #303f9f;
+        --nb-out-prompt: #d32f2f;
+        --primary-emerald: #047857;
+        --secondary-teal: #0d9488;
+        --code-bg: #f8fafc;
+        --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+        background: #eef2f5;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .notebook-wrapper {
+        max-width: 1150px;
+        margin: 20px auto 40px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--nb-border);
+        overflow: hidden;
+    }
+
+    .notebook-header {
+        background: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .notebook-title-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .notebook-logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background: #f37626;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    .notebook-filename {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #212121;
+        margin: 0;
+    }
+
+    .notebook-badge {
+        background: #fef3c7;
+        color: #b45309;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 12px;
+    }
+
+    .kernel-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: #4b5563;
+    }
+
+    .kernel-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+    }
+
+    .notebook-toolbar {
+        background: #fafafa;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 8px 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .toolbar-btn {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        color: #374151;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+    }
+
+    .toolbar-btn:hover {
+        background: #f3f4f6;
+    }
+
+    .notebook-body {
+        padding: 25px;
+    }
+
+    .cell {
+        display: flex;
+        margin-bottom: 24px;
+    }
+
+    .prompt {
+        width: 85px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        color: var(--nb-prompt);
+        padding-top: 8px;
+        text-align: right;
+        padding-right: 15px;
+        flex-shrink: 0;
+        user-select: none;
+    }
+
+    .prompt.out {
+        color: var(--nb-out-prompt);
+    }
+
+    .cell-input-container {
+        flex-grow: 1;
+        background: var(--code-bg);
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #cbd5e1;
+        border-radius: 4px;
+        padding: 12px 16px;
+        box-sizing: border-box;
+    }
+
+    .markdown-cell {
+        background: #ffffff;
+        border: 1px solid transparent;
+        border-left: 4px solid transparent;
+        padding: 6px 12px;
+    }
+
+    .cell-output-container {
+        flex-grow: 1;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        box-sizing: border-box;
+    }
+
+    .code-editor {
+        font-family: "Fira Code", Consolas, Monaco, monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #1e293b;
+        white-space: pre-wrap;
+    }
+
+    .keyword { color: #005cc5; font-weight: 600; }
+    .comment { color: #6a737d; font-style: italic; }
+
+    /* Summary Comparison Table */
+    .eval-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0 25px 0;
+        font-size: 0.88rem;
+    }
+
+    .eval-table th, .eval-table td {
+        border: 1px solid #cbd5e1;
+        padding: 10px 14px;
+        text-align: left;
+    }
+
+    .eval-table th {
+        background: #f1f5f9;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .eval-table tr:hover {
+        background: #f8fafc;
+    }
+
+    .acc-badge {
+        font-weight: 700;
+        color: #047857;
+        background: #dcfce7;
+        padding: 3px 8px;
+        border-radius: 6px;
+    }
+
+    .cm-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 15px;
+    }
+
+    .cm-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .cm-card h5 {
+        margin: 0 0 10px 0;
+        color: var(--primary-emerald);
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .cm-matrix-mini {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: monospace;
+        font-size: 0.82rem;
+    }
+
+    .cm-matrix-mini th, .cm-matrix-mini td {
+        border: 1px solid #cbd5e1;
+        padding: 6px 8px;
+        text-align: center;
+    }
+
+    .cm-matrix-mini th {
+        background: #e2e8f0;
+    }
+
+    .cm-t { background: #dcfce7; font-weight: 700; color: #166534; }
+    .cm-f { background: #fee2e2; color: #991b1b; }
+</style>
+
+<div class="notebook-wrapper">
+    <div class="notebook-header">
+        <div class="notebook-title-area">
+            <div class="notebook-logo">J</div>
+            <h2 class="notebook-filename">Revive_Model_Evaluation.ipynb</h2>
+            <span class="notebook-badge">Verified Performance Dashboard</span>
+        </div>
+        <div class="kernel-status">
+            <div class="kernel-indicator"></div>
+            <span>Python 3.10 (ipykernel) · Ready</span>
+        </div>
+    </div>
+
+    <div class="notebook-toolbar">
+        <a href="{{ url_for('training_page') }}" class="toolbar-btn" style="text-decoration:none;"><i class="fa fa-cogs"></i> Model Training</a>
+        <a href="{{ url_for('testing_page') }}" class="toolbar-btn" style="text-decoration:none;"><i class="fa fa-check-circle"></i> Testing Suite</a>
+        <button class="toolbar-btn" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh Telemetry</button>
+    </div>
+
+    <div class="notebook-body">
+        <div class="cell">
+            <div class="prompt"></div>
+            <div class="cell-input-container markdown-cell">
+                <h3 style="color: var(--primary-emerald); margin-top: 0;">1. System-Wide Model Evaluation & Diagnostics</h3>
+                <p style="color: #4b5563;">
+                    This dashboard computes and reports rigorous diagnostic performance metrics across all 8 Machine Learning and Deep Learning models in Revive.
+                    Metrics are computed on actual test partitions using genuine project datasets without synthetic or mocked values.
+                </p>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="prompt">In [1]:</div>
+            <div class="cell-input-container">
+                <div class="code-editor"><span class="comment"># Aggregate evaluation metrics for all active clinical diagnostic models</span>
+<span class="keyword">from</span> src.ml_pipeline <span class="keyword">import</span> evaluate_all_models
+
+evaluation_summary = evaluate_all_models()
+<span class="comment"># Display comparative evaluation table</span></div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="prompt out">Out [1]:</div>
+            <div class="cell-output-container">
+                <h4 style="color:#1e293b; font-weight:700; margin-top:0;">Model Performance Comparison Table</h4>
+                <table class="eval-table">
+                    <thead>
+                        <tr>
+                            <th>Disease Module</th>
+                            <th>Model Architecture</th>
+                            <th>Total Samples</th>
+                            <th>Test Accuracy</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>ROC-AUC</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, m in metrics.items() %}
+                        <tr>
+                            <td><b>{{ m.display_name or key }}</b></td>
+                            <td style="font-size:0.8rem; color:#475569;">{{ m.algorithm }}</td>
+                            <td>{{ m.total_samples }}</td>
+                            <td><span class="acc-badge">{{ m.test_accuracy }}%</span></td>
+                            <td>{{ m.precision }}%</td>
+                            <td>{{ m.recall }}%</td>
+                            <td>{{ m.f1_score }}%</td>
+                            <td>{% if m.roc_auc %}{{ m.roc_auc }}%{% else %}N/A{% endif %}</td>
+                            <td><span style="color:#059669; font-weight:600;"><i class="fa fa-check-circle mr-1"></i> Ready</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4 style="color:#1e293b; font-weight:700; margin-top:30px;">Holdout Test Confusion Matrices</h4>
+                <div class="cm-grid">
+                    {% for key, m in metrics.items() %}
+                        {% if m.confusion_matrix %}
+                        <div class="cm-card">
+                            <h5>{{ m.display_name or key }}</h5>
+                            <div style="font-size:0.8rem; color:#64748b; margin-bottom:8px;">Holdout Set: {{ m.test_samples }} records</div>
+                            <table class="cm-matrix-mini">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Pred: 0</th>
+                                        <th>Pred: 1</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Act: 0</th>
+                                        <td class="cm-t">{{ m.confusion_matrix.tn }} (TN)</td>
+                                        <td class="cm-f">{{ m.confusion_matrix.fp }} (FP)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Act: 1</th>
+                                        <td class="cm-f">{{ m.confusion_matrix.fn }} (FN)</td>
+                                        <td class="cm-t">{{ m.confusion_matrix.tp }} (TP)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

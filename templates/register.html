@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+    }
+    .auth-card {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        border-top: 5px solid #047857;
+    }
+    .auth-card h2 {
+        color: #047857;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #d1f0e5;
+        padding: 10px;
+    }
+    .btn-auth {
+        background: #047857;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        font-weight: bold;
+    }
+    .btn-auth:hover {
+        background: #036b4e;
+        color: white;
+    }
+    .auth-links {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .auth-links a {
+        color: #0d9488;
+        text-decoration: none;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Register for Revive</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-auth">Register</button>
+        </form>
+        <div class="auth-links">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

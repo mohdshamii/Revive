@@ -106,7 +106,7 @@ st.markdown(
     </style>
     
     <div class="header">
-        <h1><span class="header-icon">🫀</span> CardioVision AI</h1>
+        <h1><span class="header-icon"><i class="fa fa-heartbeat" style="color:#ff4d6d;"></i></span> CardioVision AI</h1>
         <h3>Advanced Heart Disease Risk Prediction</h3>
     </div>
     """,
@@ -135,7 +135,7 @@ def predict_risk():
 
 # Sidebar Inputs
 with st.sidebar:
-    st.header("⚕️ Patient Information")
+    st.header("Patient Information")
     name = st.text_input("Full Name")
     col1, col2 = st.columns(2)
     with col1:
@@ -143,12 +143,12 @@ with st.sidebar:
     with col2:
         sex = st.selectbox("Sex", ["Male", "Female"])
 
-    st.subheader("🩺 Health Metrics")
+    st.subheader("Health Metrics")
     bp = st.slider("Blood Pressure (mm Hg)", 80, 200, 120)
     chol = st.slider("Cholesterol (mg/dl)", 100, 600, 200)
     hr = st.slider("Resting Heart Rate (bpm)", 40, 120, 72)
 
-    st.subheader("🏃‍♂️ Lifestyle")
+    st.subheader("Lifestyle")
     smoker = st.radio("Smoker", ["Yes", "No"], horizontal=True)
     weight = st.number_input("Weight (kg)", 40, 200, 70)
     height = st.number_input("Height (cm)", 140, 220, 170)
@@ -156,13 +156,13 @@ with st.sidebar:
     st.metric("BMI", f"{bmi:.1f}", "Healthy" if 18.5 <= bmi <= 24.9 else "Attention")
 
 # Tabs Layout
-tab1, tab2, tab3 = st.tabs(["📊 Risk Assessment", "📈 Dashboard", "💡 Tips"])
+tab1, tab2, tab3 = st.tabs(["Risk Assessment", "Dashboard", "Tips"])
 
 with tab1:
-    st.header("📊 Cardiovascular Risk Estimation")
+    st.header("Cardiovascular Risk Estimation")
     st.markdown("<div class='pulse'></div>", unsafe_allow_html=True)
 
-    if st.button("🔍 Assess My Risk", use_container_width=True):
+    if st.button("Assess My Risk", use_container_width=True):
         with st.spinner('Analyzing your profile...'):
             time.sleep(1.5)
             risk = predict_risk()
@@ -177,34 +177,34 @@ with tab1:
 
             # Adjusted risk thresholds
             if risk > 55:
-                st.error("🚨 High Risk – Immediate consultation recommended!")
+                st.error("High Risk - Immediate consultation recommended!")
                 with st.expander("Recommendations"):
                     st.markdown("""
-                    - Consult a cardiologist immediately 🏥
+                    - Consult a cardiologist immediately
                     - Strictly control blood pressure and cholesterol
-                    - Adopt a heart-healthy diet 🥗
-                    - Engage in supervised physical activity 🏃‍♂️
+                    - Adopt a heart-healthy diet
+                    - Engage in supervised physical activity
                     """)
             elif risk > 20:
-                st.warning("⚠️ Moderate Risk – Lifestyle changes needed.")
+                st.warning("Moderate Risk - Lifestyle changes needed.")
                 with st.expander("Recommendations"):
                     st.markdown("""
-                    - Improve diet (more fruits, veggies) 🥦🍎
-                    - Exercise at least 150 minutes/week 🏃
-                    - Quit smoking 🚬❌
-                    - Manage stress 🧘‍♂️
+                    - Improve diet (more fruits, vegetables)
+                    - Exercise at least 150 minutes/week
+                    - Quit smoking
+                    - Manage stress
                     """)
             else:
-                st.success("✅ Low Risk – Keep maintaining good habits!")
+                st.success("Low Risk - Keep maintaining good habits!")
                 with st.expander("Recommendations"):
                     st.markdown("""
-                    - Maintain healthy lifestyle 🌟
-                    - Stay active and hydrated 🚶‍♀️💧
-                    - Annual health checkups 📋
+                    - Maintain healthy lifestyle
+                    - Stay active and hydrated
+                    - Annual health checkups
                     """)
 
 with tab2:
-    st.header("📈 Health Dashboard")
+    st.header("Health Dashboard")
     
     if 'risk' in st.session_state:
         # Create radar chart
@@ -244,15 +244,15 @@ with tab2:
         st.info("Please complete the risk assessment first to view dashboard")
 
 with tab3:
-    st.header("💡 Health Recommendations")
+    st.header("Health Recommendations")
     with st.expander("Daily Habits"):
-        st.success("• Drink 2-3 liters of water daily 💧")
-        st.success("• Get 7-9 hours of quality sleep 😴")
+        st.success("• Drink 2-3 liters of water daily")
+        st.success("• Get 7-9 hours of quality sleep")
     with st.expander("Nutrition"):
-        st.success("• Eat plenty of fruits and vegetables 🥦")
-        st.success("• Limit processed foods and sugars 🚫")
+        st.success("• Eat plenty of fruits and vegetables")
+        st.success("• Limit processed foods and sugars")
     with st.expander("Activity"):
-        st.success("• 150+ minutes of exercise weekly 🏃")
-        st.success("• Include strength training 💪")
+        st.success("• 150+ minutes of exercise weekly")
+        st.success("• Include strength training")
 
-st.caption("© 2026 CardioVision AI. All Rights Reserved.")
+st.caption("Copyright 2026 CardioVision AI. All Rights Reserved.")

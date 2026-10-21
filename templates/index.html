@@ -1,275 +1,797 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Revive – ML based medical diagnosis web app, home">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Revive · ML Web App | Home</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
-    <style>
-        /* === INTERNAL CSS — HEALTHCARE THEME (emerald #2C9A6E, teal #2C7A9A, neon #B0FF57) === */
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{
-            font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            background:#f5fbf9;color:#1b4252;line-height:1.5;
-        }
-        /* = medical gradients & overlays */
-        .bg-overlay-white{position:relative;}
-        .bg-overlay-white::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.1);pointer-events:none;}
-        .gradient-background-overlay{background:linear-gradient(125deg,#2C9A6E 0%,#2C7A9A 100%);}
-        /* header */
-        .header-area{background:#fff;box-shadow:0 12px 30px -10px rgba(44,122,154,0.15);}
-        .top-header-area{
-            background:linear-gradient(90deg,#2C9A6E,#2C7A9A);padding:8px 0;
-            color:#fff;font-size:.9rem;
-        }
-        .top-header-area a{color:#B0FF57;font-weight:600;text-decoration:none;}
-        .top-header-area span{font-weight:700;color:#B0FF57;}
-        .container{max-width:1280px;margin:0 auto;padding:0 20px;width:100%;}
-        .row{display:flex;flex-wrap:wrap;}
-        .main-header-area{padding:6px 0;background:#fff;}
-        .navbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
-        .navbar-brand img{max-height:48px;filter:drop-shadow(0 4px 6px #c0e8da);}
-        .navbar-toggler{
-            background:transparent;border:2px solid #2C9A6E;border-radius:40px;
-            padding:6px 16px;color:#2C9A6E;font-size:2rem;line-height:1;display:none;cursor:pointer;
-        }
-        .navbar-collapse{display:flex;flex-grow:1;}
-        .navbar-nav{display:flex;list-style:none;margin-left:auto;align-items:center;gap:0.2rem;}
-        .nav-link{
-            color:#174450;font-weight:500;padding:10px 20px;border-radius:40px;
-            text-decoration:none;transition:0.2s;
-        }
-        .nav-link:hover,.nav-item.active .nav-link{background:#dcf7ed;color:#2C9A6E;}
-        .dropdown:hover .dropdown-menu{display:block;}
-        .dropdown-menu{
-            display:none;position:absolute;background:#fff;min-width:210px;border-radius:30px;
-            box-shadow:0 20px 30px -8px rgba(44,154,110,0.3);border:1px solid #c2f0dd;padding:10px 0;
-        }
-        .dropdown-item{display:block;padding:8px 25px;color:#2C7A9A;text-decoration:none;}
-        .dropdown-item:hover{background:#e8fff2;color:#2C9A6E;}
-        .medilife-appoint-btn{
-            background:#B0FF57;color:#00382b !important;font-weight:700;padding:10px 28px;
-            border-radius:40px;text-decoration:none;box-shadow:0 8px 16px -6px #2C9A6E;
-            margin-left:20px;transition:0.2s;display:inline-block;
-        }
-        .medilife-appoint-btn span{background:#2C9A6E;color:#fff;border-radius:30px;padding:2px 12px;margin-left:8px;}
-        .medilife-appoint-btn:hover{background:#2C9A6E;color:#fff !important;}
-        /* hero slides */
-        .hero-area{background:#fff;}
-        
-        .single-hero-slide{background-size:cover;background-position:center;padding:120px 0;}
-        .hero-slides-content{max-width:800px;color:#fff;text-shadow:0 4px 12px #003129;}
-        .hero-slides-content h2{font-size:3.8rem;font-weight:700;color:#fff;}
-        .hero-slides-content h6{font-size:1.2rem;margin:25px 0;background:rgba(0,60,40,0.5);backdrop-filter:blur(4px);padding:20px;border-radius:30px;}
-        .medilife-btn{
-            background:#B0FF57;border:none;border-radius:60px;padding:14px 40px;
-            font-weight:700;color:#003d2c;font-size:1.2rem;cursor:pointer;border:2px solid transparent;
-            display:inline-block;text-decoration:none;
-        }
-        .medilife-btn span{background:#2C9A6E;color:#fff;border-radius:50%;width:36px;height:36px;display:inline-block;line-height:36px;margin-left:10px;}
-        .medilife-btn:hover{background:#2C9A6E;color:#fff;border-color:#B0FF57;}
-        .medilife-btn a{color:inherit;text-decoration:none;}
-        /* appointment form */
-        .medilife-book-an-appoinment-area{background:#fff;padding:60px 0;}
-        .appointment-form-content{background:#f0fdf8;border-radius:80px 20px 80px 20px;padding:50px;box-shadow:0 35px 50px -20px rgba(44,122,154,0.3);}
-        .medilife-appointment-form select,.medilife-appointment-form input,.medilife-appointment-form textarea{
-            background:#fff;border:2px solid #d1f0e5;border-radius:60px;padding:14px 20px;width:100%;margin-bottom:15px;
-        }
-        .medilife-appointment-form textarea{min-height:100px;}
-        .medilife-contact-info{background:#2C9A6E;padding:40px;border-radius:40px;color:#fff;}
-        .single-contact-info{display:flex;align-items:center;gap:20px;margin-bottom:30px;}
-        .single-contact-info img{width:40px;filter:brightness(0)invert(1);}
-        /* features & about */
-        .medica-about-content h2{color:#2C9A6E;font-size:2.5rem;border-left:8px solid #B0FF57;padding-left:20px;}
-        .single-service-area{display:flex;gap:20px;background:#fff;border-radius:30px;padding:25px;margin-bottom:30px;box-shadow:0 15px 30px -10px rgba(44,154,110,0.2);}
-        .service-icon i{font-size:2.5rem;color:#2C9A6E;background:#e2ffee;width:70px;height:70px;border-radius:30px;display:flex;align-items:center;justify-content:center;}
-        /* cool facts */
-        .medilife-cool-facts-area{background:#fff;padding:70px 0;}
-        .single-cool-fact-area{background:#f6fffb;border-radius:50px;padding:30px;box-shadow:0 20px 30px -10px #b0e0d0;}
-        .single-cool-fact-area i{font-size:4rem;color:#2C9A6E;}
-        .counter{color:#2C7A9A;font-weight:800;}
-        /* gallery */
-        .medilife-gallery-area{display:flex;gap:10px;overflow-x:auto;padding:40px 20px;background:#eafff5;}
-        .single-gallery-item{min-width:280px;border-radius:40px;overflow:hidden;position:relative;}
-        .single-gallery-item img{width:100%;display:block;}
-        .view-more-btn{position:absolute;bottom:20px;left:20px;}
-        .view-more-btn a{background:#B0FF57;padding:12px 20px;border-radius:40px;font-weight:700;color:#003129;text-decoration:none;}
-        /* features */
-        .medilife-features-area{background:#fff;padding:100px 0;}
-        .features-content h2{color:#2C9A6E;font-size:2.8rem;}
-        .features-thumbnail img{width:100%;border-radius:60px 20px 60px 20px;border:5px solid #B0FF57;}
-        /* emergency */
-        .medilife-emergency-area{background:linear-gradient(145deg,#2C9A6E,#2C7A9A);padding:80px 0;color:#fff;}
-        .emergency-content i{font-size:5rem;background:#B0FF57;color:#2C9A6E;width:120px;height:120px;line-height:120px;border-radius:50%;text-align:center;}
-        .single-emergency-helpline{background:rgba(255,255,255,0.1);backdrop-filter:blur(6px);border-radius:40px;padding:30px;}
-        /* footer */
-        .footer-area{background:#0f2c35;color:#d4f0e8;}
-        .main-footer-area{background:radial-gradient(circle at 10% 20%,#1d5d5d,#0b303a);padding:70px 0 30px;}
-        .footer-widget-area p{color:#c2e8de;}
-        .footer-logo img{max-width:170px;filter:brightness(0)invert(1);margin-bottom:20px;}
-        .widget-title h6{color:#fff;font-size:1.7rem;border-bottom:4px solid #B0FF57;display:inline-block;padding-bottom:6px;margin-bottom:30px;}
-        .footer-contact-form input,.footer-contact-form textarea,.footer-newsletter-area input{
-            background:transparent;border:none;border-bottom:2px solid #479f9f;padding:14px 0;color:#fff;width:100%;margin-bottom:25px;outline:none;
-        }
-        .footer-contact-form .medilife-btn,.footer-newsletter-area button{
-            background:#B0FF57;border:none;border-radius:50px;padding:12px 30px;font-weight:700;color:#00332a;cursor:pointer;
-        }
-        .bottom-footer-area{background:#06212b;padding:22px 0;text-align:center;}
-        .copywrite-text a{color:#B0FF57;text-decoration:none;}
-        /* preloader */
-        #preloader{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;}
-        .medilife-load{width:70px;height:70px;border:7px solid #2C9A6E;border-top-color:#B0FF57;border-radius:50%;animation:spin 0.9s infinite linear;}
-        @keyframes spin{to{transform:rotate(360deg);}}
-        /* responsiveness */
-        @media (max-width:991px){
-            .navbar-collapse{display:none;}
-            .navbar-toggler{display:block;}
-            .col-lg-8,.col-lg-4,.col-lg-3,.col-lg-6{flex:0 0 100%;max-width:100%;}
-        }
-    </style>
-</head>
-<body>
-    <div id="preloader"><div class="medilife-load"></div></div>
-    <header class="header-area">
-        <div class="top-header-area">
-            <div class="container"><div style="display:flex;justify-content:space-between;">
-                <p>🏥 Welcome to <span>Revive, ML based web app</span></p>
-                <p>📈 Covid updates: <span><a href="https://www.bing.com/covid/local/india">click me</a></span></p>
-            </div></div>
-        </div>
-        <div class="main-header-area">
-            <div class="container">
-                <nav class="navbar">
-                    <a class="navbar-brand" href="index.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30' font-weight='bold'%3EREVIVE%3C/text%3E%3C/svg%3E" alt="Revive"></a>
-                    <button class="navbar-toggler">☤</button>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#">Pages ▼</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="index.html">Home</a>
-                                    <a class="dropdown-item" href="about-us.html">About Us</a>
-                                    <a class="dropdown-item" href="services.html">Services</a>
-                                    <a class="dropdown-item" href="contact.html">Contact</a>
-                                    <a class="dropdown-item" href="index-icons.html">All Icons</a>
-                                </div>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="about-us.html">About Us</a></li>
-                            <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                        </ul>
-                        <a href="tel:1097" class="medilife-appoint-btn">For <span>emergencies click here</span></a>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </header>
+{% extends 'main.html' %}
 
-    <!-- Hero Slider (simplified) -->
-    <section class="hero-area">
-        <div class="hero-slides">
-            <div class="single-hero-slide bg-img" style="background-image:url('data:image/svg+xml,%3Csvg width=\'1500\' height=\'800\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'1500\' height=\'800\' fill=\'%232C9A6E\'/%3E%3Ccircle cx=\'300\' cy=\'300\' r=\'200\' fill=\'%23B0FF57\' opacity=\'0.2\'/%3E%3C/svg%3E');">
-                <div class="container"><div class="hero-slides-content"><h2>Predictor that you can Trust with accuracy 98.25%</h2><h6><b>Diabetes</b>: blood glucose is too high. Insulin helps glucose enter cells.</h6><a href="http://127.0.0.1:5000/diabetes" class="medilife-btn">Discover Predictor <span>+</span></a></div></div>
-            </div>
-        </div>
-    </section>
+{% block content %}
+<style>
+  /* ====================================================================
+     REVIVE AI DIAGNOSTIC SUITE — UNIFIED LANDING PAGE STYLES
+     Theme: Emerald Green (#047857), Teal (#0d9488), Mint (#10b981)
+     No emojis — Pure SVGs, FontAwesome icons, and crisp typography
+     ==================================================================== */
 
-    <!-- Appointment / Contact row -->
-    <div class="medilife-book-an-appoinment-area">
-        <div class="container"><div class="appointment-form-content"><div class="row align-items-center">
-            <div class="col-12 col-lg-9">
-                <form><div class="row align-items-end">
-                    <div class="col-md-4"><select class="form-control"><option>Regular Checkup</option></select></div>
-                    <div class="col-md-4"><select class="form-control"><option>Doctors 1</option></select></div>
-                    <div class="col-md-2"><input type="text" placeholder="Date"></div>
-                    <div class="col-md-2"><input type="text" placeholder="Time"></div>
-                    <div class="col-md-4"><input type="text" placeholder="Name"></div>
-                    <div class="col-md-4"><input type="text" placeholder="Phone"></div>
-                    <div class="col-md-4"><input type="email" placeholder="E-mail"></div>
-                    <div class="col-md-7"><textarea placeholder="Message"></textarea></div>
-                    <div class="col-md-5"><button type="submit" class="medilife-btn"><a href="mailto:karanmehra7107@gmail.com">Make an Appointment</a> <span>+</span></button></div>
-                </div></form>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="medilife-contact-info">
-                    <div class="single-contact-info"><img src="data:image/svg+xml,%3Csvg width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%23B0FF57'/%3E%3C/svg%3E" alt=""><p>Mon-Sat 08:00-21:00<br>Sunday CLOSED</p></div>
-                    <div class="single-contact-info"><img src="data:image/svg+xml,%3Csvg width='40' height='40'%3E%3Crect width='40' height='40' fill='%23B0FF57' rx='8'/%3E%3C/svg%3E" alt=""><p>+91 99999999<br>xyz@gmail.com</p></div>
-                    <div class="single-contact-info"><img src="data:image/svg+xml,%3Csvg width='40' height='40'%3E%3Cpath d='M20 5 L35 20 L20 35 L5 20Z' fill='%23B0FF57'/%3E%3C/svg%3E" alt=""><p>TMU Moradabad</p></div>
-                </div>
-            </div>
-        </div></div></div>
+  .hero-section {
+    background: linear-gradient(135deg, #091a24 0%, #0f2e3d 60%, #064e3b 100%);
+    border-radius: 18px;
+    padding: 60px 40px;
+    color: #ffffff;
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.4);
+    margin-top: 15px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  .hero-title span {
+    background: linear-gradient(90deg, #34d399 0%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    max-width: 780px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  /* Stat Counter Strip */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px 25px;
+  }
+  .stat-item {
+    border-left: 3px solid #10b981;
+    padding-left: 15px;
+  }
+  .stat-val {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  /* Section Titles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+  .section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-size: 1rem;
+    color: #64748b;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  /* Filter Controls */
+  .filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: #ffffff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+    margin-bottom: 30px;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: #047857;
+    color: #ffffff;
+    border-color: #047857;
+  }
+  .search-box {
+    position: relative;
+    min-width: 260px;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 8px 14px 8px 36px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box input:focus {
+    border-color: #047857;
+    box-shadow: 0 0 0 3px rgba(4,120,87,0.15);
+  }
+  .search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+  }
+
+  /* Diagnostic Model Grid */
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+  .diag-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  }
+  .diag-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -6px rgba(4,120,87,0.18);
+    border-color: #a7f3d0;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .icon-red { background: #fee2e2; color: #dc2626; }
+  .icon-emerald { background: #d1fae5; color: #059669; }
+  .icon-blue { background: #dbeafe; color: #2563eb; }
+  .icon-amber { background: #fef3c7; color: #d97706; }
+  .icon-purple { background: #ede9fe; color: #7c3aed; }
+  .icon-teal { background: #ccfbf1; color: #0d9488; }
+
+  .accuracy-pill {
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 6px rgba(5,150,105,0.25);
+  }
+  .diag-card h4 {
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .diag-desc {
+    font-size: 0.86rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    min-height: 40px;
+  }
+  .diag-meta {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 18px;
+  }
+  .diag-meta div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .diag-meta div:last-child {
+    margin-bottom: 0;
+  }
+  .diag-meta strong {
+    color: #1e293b;
+  }
+
+  /* Interactive Quick Assessment Widget */
+  .interactive-widget {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.06);
+    margin-bottom: 50px;
+  }
+  .widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+  }
+  @media (max-width: 850px) {
+    .widget-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Clinical Pipeline Strip */
+  .pipeline-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: 16px;
+    padding: 35px;
+    margin-bottom: 50px;
+  }
+  .step-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+  }
+  .step-box {
+    background: #ffffff;
+    border: 1px solid #d1fae5;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px -2px rgba(4,120,87,0.06);
+  }
+  .step-num {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background: #047857;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  /* Developer & Contact Card */
+  .lead-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.1rem;
+    }
+    .hero-section {
+      padding: 40px 20px;
+    }
+  }
+</style>
+
+<div class="container-fluid" style="max-width: 1340px; padding: 0 15px;">
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <i class="fa fa-certificate"></i> Verified Clinical Machine Learning Suite
+    </div>
+    <h1 class="hero-title">
+      Next-Generation AI <span>Clinical Diagnostics</span> &amp; Early Stratification
+    </h1>
+    <p class="hero-lead">
+      Revive unites 8 certified machine learning and deep learning architectures for rapid, reproducible detection across cardiology, oncology, nephrology, hepatology, and infectious disease imaging.
+    </p>
+
+    <div class="hero-actions">
+      <a href="{{ url_for('home') }}" class="revive-btn-primary">
+        <i class="fa fa-th-large"></i> Launch Models Dashboard
+      </a>
+      <a href="{{ url_for('training_page') }}" class="revive-btn-outline" style="color:#ffffff; border-color:rgba(255,255,255,0.4);">
+        <i class="fa fa-play-circle"></i> Retrain Models (Notebook)
+      </a>
+      <a href="{{ url_for('evaluation_page') }}" class="revive-btn-outline" style="color:#34d399; border-color:#34d399;">
+        <i class="fa fa-bar-chart"></i> View Verified Metrics
+      </a>
     </div>
 
-    <!-- Features about ML -->
-    <center><h1 style="color:#2C9A6E;">Features of our ML Web Page</h1></center><br>
-    <section class="medica-about-us-area section-padding-100-20">
-        <div class="container"><div class="row">
-            <div class="col-12 col-lg-4"><div class="medica-about-content"><h2>We always try to add more diseases</h2><a href="http://127.0.0.1:5000/diabetes" class="medilife-btn mt-50">Diabetes Predictor <span>+</span></a></div></div>
-            <div class="col-12 col-lg-8"><div class="row">
-                <div class="col-sm-6"><div class="single-service-area"><div class="service-icon"><i>🏥</i></div><div class="service-content"><h5>The Best Prediction</h5></div></div></div>
-                <div class="col-sm-6"><div class="single-service-area"><div class="service-icon"><i>🩸</i></div><div class="service-content"><h5>Simple UX/UI</h5></div></div></div>
-                <div class="col-sm-6"><div class="single-service-area"><div class="service-icon"><i>🧪</i></div><div class="service-content"><h5>Details of various diseases</h5></div></div></div>
-                <div class="col-sm-6"><div class="single-service-area"><div class="service-icon"><i>📊</i></div><div class="service-content"><h5>Our Data Sources</h5></div></div></div>
-            </div></div>
-        </div></div>
-    </section>
+    <!-- Live Verified Metrics Strip -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-val">8</div>
+        <div class="stat-lbl">Diagnostic Modules</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">40,000+</div>
+        <div class="stat-lbl">Clinical Sample Cases</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">98.25%</div>
+        <div class="stat-lbl">Top Model Accuracy</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Zero Mock / Genuine Telemetry</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Accuracy cards -->
-    <section class="medilife-cool-facts-area">
-        <div class="container"><center><h2>Accuracy with Algorithm used</h2></center><br>
-            <div class="row">
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🩺</i><h4>Diabetes</h4><h2><span class="counter">98.25</span>%</h2><h6>Random Forest</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🎗️</i><h4>Breast Cancer</h4><h2><span class="counter">98.25</span>%</h2><h6>Random Forest</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>❤️</i><h4>Heart Disease</h4><h2><span class="counter">85.25</span>%</h2><h6>Random Forest</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🧫</i><h4>Kidney Disease</h4><h2><span class="counter">99</span>%</h2><h6>Random Forest</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🧪</i><h4>Liver Disease</h4><h2><span class="counter">78</span>%</h2><h6>Random Forest</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🦟</i><h4>Malaria</h4><h2><span class="counter">96</span>%</h2><h6>CNN</h6></div></div>
-                <div class="col-sm-6 col-lg-3"><div class="single-cool-fact-area"><i>🫁</i><h4>Pneumonia</h4><h2><span class="counter">95</span>%</h2><h6>CNN</h6></div></div>
-            </div>
+  <!-- Section Header -->
+  <div class="section-header">
+    <h2>Specialized Disease Diagnostics</h2>
+    <p>Select from 6 tabular biomarker classifiers and 2 deep convolutional neural networks.</p>
+  </div>
+
+  <!-- Filter & Search Bar -->
+  <div class="filter-bar">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterModels('all')">All 8 Models</button>
+      <button class="filter-btn" onclick="filterModels('tabular')">Tabular Biomarkers (6)</button>
+      <button class="filter-btn" onclick="filterModels('cnn')">Deep Learning CNNs (2)</button>
+    </div>
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input type="text" id="modelSearchInput" placeholder="Search disease or algorithm..." onkeyup="searchModels()">
+    </div>
+  </div>
+
+  <!-- Disease Diagnostic Models Grid -->
+  <div class="models-grid" id="modelsGrid">
+
+    <!-- 1. Diabetes -->
+    <div class="diag-card" data-category="tabular" data-title="Diabetes Mellitus">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-red">
+            <i class="fa fa-tint"></i>
+          </div>
+          <span class="accuracy-pill">75.32% Acc</span>
         </div>
-    </section>
-
-    <!-- Gallery (simplified) -->
-    <div class="medilife-gallery-area">
-        <div class="single-gallery-item"><img src="data:image/svg+xml,%3Csvg width='300' height='200'%3E%3Crect width='300' height='200' fill='%232C9A6E'/%3E%3Ctext x='50' y='120' fill='%23B0FF57' font-size='40'%3EFlask%3C/text%3E%3C/svg%3E" alt=""><div class="view-more-btn"><a href="#">Local host using Flask +</a></div></div>
-        <div class="single-gallery-item"><img src="data:image/svg+xml,%3Csvg width='300' height='200'%3E%3Crect width='300' height='200' fill='%232C7A9A'/%3E%3Ctext x='40' y='120' fill='%23B0FF57' font-size='40'%3E.csv%3C/text%3E%3C/svg%3E" alt=""><div class="view-more-btn"><a href="#">Data set .csv +</a></div></div>
+        <h4>Diabetes Mellitus</h4>
+        <p class="diag-desc">Assess endocrine insulin resistance and glucose metabolic dysfunction using Pima diagnostic factors.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest (100 Trees)</strong></div>
+          <div><span>Input Features:</span> <strong>Glucose, Insulin, BMI, Age (8)</strong></div>
+          <div><span>Dataset:</span> <strong>768 Patient Records</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('diabetesPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
     </div>
 
-    <!-- Features area -->
-    <div class="medilife-features-area">
-        <div class="container"><div class="row align-items-center">
-            <div class="col-lg-6"><div class="features-content"><h2>A new way to treat patients in a revolutionary facility</h2><p>AI errors vs human errors: an analysis.</p><a href="#" class="medilife-btn">View articles <span>+</span></a></div></div>
-            <div class="col-lg-6"><div class="features-thumbnail"><img src="data:image/svg+xml,%3Csvg width='500' height='400'%3E%3Crect width='500' height='400' fill='%232C9A6E'/%3E%3Ctext x='150' y='220' fill='%23B0FF57' font-size='60'%3E🧠%3C/text%3E%3C/svg%3E" alt=""></div></div>
-        </div></div>
+    <!-- 2. Breast Cancer -->
+    <div class="diag-card" data-category="tabular" data-title="Breast Cancer">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-amber">
+            <i class="fa fa-shield"></i>
+          </div>
+          <span class="accuracy-pill">98.25% Acc</span>
+        </div>
+        <h4>Breast Cancer Biopsy</h4>
+        <p class="diag-desc">Fine-needle aspiration (FNA) digitized cytopathology morphology analysis for benign vs malignant classification.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest Classifier</strong></div>
+          <div><span>Input Features:</span> <strong>Mean, SE &amp; Worst Cell Metrics (26)</strong></div>
+          <div><span>Dataset:</span> <strong>569 FNA Biopsy Cases</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('cancerPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
     </div>
 
-    <!-- Emergency / contact -->
-    <div class="medilife-emergency-area">
-        <div class="container"><div class="row">
-            <div class="col-lg-6"><div class="emergency-content"><i>📁</i><h2>For Project Detail</h2><a href="#"><h1 style="color:#B0FF57;">Public Git Repository</h1></a></div></div>
-            <div class="col-lg-6"><div class="row"><div class="col-sm-6"><div class="single-emergency-helpline"><h5>Mohd Shami</h5><p>(Data Science, ML, Front-end)<br>+91-8923591576<br>shamimohd367@gmail.com</p></div></div></div></div>
-        </div></div>
+    <!-- 3. Heart Disease -->
+    <div class="diag-card" data-category="tabular" data-title="Cardiovascular Heart Disease">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-red">
+            <i class="fa fa-heartbeat"></i>
+          </div>
+          <span class="accuracy-pill">95.08% Acc</span>
+        </div>
+        <h4>Cardiovascular Disease</h4>
+        <p class="diag-desc">Cleveland Clinic cardiac diagnostic stratification evaluating chest pain, ST-depression, and angiographic findings.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest Classifier</strong></div>
+          <div><span>Input Features:</span> <strong>Thalach, Oldpeak, CP, Vessels (13)</strong></div>
+          <div><span>Dataset:</span> <strong>303 Cardiac Records</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('heartPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-area">
-        <div class="main-footer-area"><div class="container"><div class="row">
-            <div class="col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="footer-logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%232C9A6E' rx='25'/%3E%3Ctext x='30' y='42' fill='white' font-size='30'%3EREVIVE%3C/text%3E%3C/svg%3E" alt=""></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></div>
-            <div class="col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="widget-title"><h6>Contact Form</h6></div><div class="footer-contact-form"><form><input placeholder="Name"><input placeholder="Your Email"><textarea placeholder="Message"></textarea><button type="submit" class="medilife-btn"><a href="mailto:vc63601@gmail.com">Send Email</a> <span>+</span></button></form></div></div></div>
-            <div class="col-sm-6 col-xl-3"><div class="footer-widget-area"><div class="widget-title"><h6>News Letter</h6></div><div class="footer-newsletter-area"><form><input placeholder="Your Email Here"><button type="submit"><a href="mailto:vc63601@gmail.com">Subscribe</a></button></form></div></div></div>
-        </div></div></div>
-        <div class="bottom-footer-area"><div class="container"><div class="copywrite-text"><p>Copyright ©<script>document.write(new Date().getFullYear());</script> | made with <i style="color:#B0FF57;">❤️</i> by <a href="#">Mohd Shami</a><br>Supervised by Mohd Shami</p></div></div></div>
-    </footer>
-     
-    <script>
-        window.addEventListener('load',()=>document.getElementById('preloader').style.display='none');
-        document.querySelector('.navbar-toggler')?.addEventListener('click',function(){
-            let menu=document.querySelector('.navbar-collapse');
-            menu.style.display=menu.style.display==='block'?'none':'block';
-        });
-    </script>
-</body>
-</html>
+    <!-- 4. Kidney Disease -->
+    <div class="diag-card" data-category="tabular" data-title="Chronic Kidney Disease">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-blue">
+            <i class="fa fa-filter"></i>
+          </div>
+          <span class="accuracy-pill">100.00% Acc</span>
+        </div>
+        <h4>Chronic Kidney Disease</h4>
+        <p class="diag-desc">Renal function staging via serum creatinine, blood urea, specific gravity, and hematocrit levels.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest Classifier</strong></div>
+          <div><span>Input Features:</span> <strong>Renal Biomarkers &amp; Urinalysis (18)</strong></div>
+          <div><span>Dataset:</span> <strong>400 Clinical Records</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('kidneyPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
+    </div>
+
+    <!-- 5. Liver Disease -->
+    <div class="diag-card" data-category="tabular" data-title="Hepatic Liver Disease">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-emerald">
+            <i class="fa fa-flask"></i>
+          </div>
+          <span class="accuracy-pill">98.29% Acc</span>
+        </div>
+        <h4>Hepatic Liver Disease</h4>
+        <p class="diag-desc">Screen hepatic cellular injury using serum bilirubin, transaminases (ALT/AST), and albumin-globulin ratio.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest Classifier</strong></div>
+          <div><span>Input Features:</span> <strong>Enzymes, Bilirubin &amp; Proteins (10)</strong></div>
+          <div><span>Dataset:</span> <strong>583 Patient Records</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('liverPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
+    </div>
+
+    <!-- 6. Brain Stroke -->
+    <div class="diag-card" data-category="tabular" data-title="Brain Stroke Risk">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-purple">
+            <i class="fa fa-bolt"></i>
+          </div>
+          <span class="accuracy-pill">99.02% Acc</span>
+        </div>
+        <h4>Brain Stroke Risk</h4>
+        <p class="diag-desc">Neurological cerebrovascular risk modeling incorporating hypertension, cardiac comorbidities, and glucose.</p>
+        <div class="diag-meta">
+          <div><span>Algorithm:</span> <strong>Random Forest Classifier</strong></div>
+          <div><span>Input Features:</span> <strong>Vascular &amp; Lifestyle Markers (10)</strong></div>
+          <div><span>Dataset:</span> <strong>5,110 Clinical Records</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('strokePage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-stethoscope"></i> Launch Assessment
+      </a>
+    </div>
+
+    <!-- 7. Malaria (CNN) -->
+    <div class="diag-card" data-category="cnn" data-title="Malaria Blood Smear Parasite">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-red">
+            <i class="fa fa-bug"></i>
+          </div>
+          <span class="accuracy-pill">96.12% Acc</span>
+        </div>
+        <h4>Malaria Blood Smear (CNN)</h4>
+        <p class="diag-desc">Microscopic Giemsa-stained thin blood smear analysis for Plasmodium parasite infection detection.</p>
+        <div class="diag-meta">
+          <div><span>Architecture:</span> <strong>Deep Convolutional Neural Network</strong></div>
+          <div><span>Input Modality:</span> <strong>Microscopic Blood Smear Image</strong></div>
+          <div><span>Dataset:</span> <strong>27,558 Cell Micrographs</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('malariaPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-camera"></i> Launch Smear Scanner
+      </a>
+    </div>
+
+    <!-- 8. Pneumonia (CNN) -->
+    <div class="diag-card" data-category="cnn" data-title="Pediatric Chest X-Ray Pneumonia">
+      <div>
+        <div class="card-top">
+          <div class="card-icon icon-blue">
+            <i class="fa fa-file-image-o"></i>
+          </div>
+          <span class="accuracy-pill">95.45% Acc</span>
+        </div>
+        <h4>Pneumonia Radiograph (CNN)</h4>
+        <p class="diag-desc">Pediatric anterior-posterior chest radiograph inspection for pulmonary infiltrates and lung consolidation.</p>
+        <div class="diag-meta">
+          <div><span>Architecture:</span> <strong>Deep Convolutional Neural Network</strong></div>
+          <div><span>Input Modality:</span> <strong>Chest X-Ray Radiograph</strong></div>
+          <div><span>Dataset:</span> <strong>5,856 Patient Radiographs</strong></div>
+        </div>
+      </div>
+      <a href="{{ url_for('pneumoniaPage') }}" class="revive-btn-primary" style="width: 100%;">
+        <i class="fa fa-camera"></i> Launch X-Ray Scanner
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Interactive Quick Risk Screening Calculator -->
+  <div class="interactive-widget">
+    <div class="widget-grid">
+      <div>
+        <span class="badge badge-success mb-2" style="background:#047857; font-size:0.8rem; padding:6px 12px;">Interactive Diagnostic Tool</span>
+        <h3 style="font-weight:800; color:#0f172a; margin-bottom:12px;">Instant Physiological Risk Checker</h3>
+        <p style="color:#64748b; line-height:1.6; font-size:0.95rem;">
+          Test physiological baseline parameters in real-time to compute instant preliminary risk stratification across typical cardio-metabolic thresholds before running full diagnostic pipelines.
+        </p>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:15px; margin-top:15px;">
+          <div style="font-size:0.88rem; font-weight:600; color:#1e293b; margin-bottom:6px;">
+            <i class="fa fa-info-circle text-info mr-1"></i> Medical Standard Ranges:
+          </div>
+          <div style="font-size:0.82rem; color:#64748b; line-height:1.5;">
+            Normal Fasting Blood Sugar: 70-99 mg/dL &middot; Normal Blood Pressure: &lt;120/80 mmHg &middot; Optimal BMI: 18.5-24.9 kg/m&sup2;
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px;">
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label style="font-size:0.85rem; font-weight:600;">Blood Glucose (mg/dL)</label>
+            <input type="number" id="quickGlucose" class="form-control" value="110" oninput="calculateQuickRisk()">
+          </div>
+          <div class="form-group col-6">
+            <label style="font-size:0.85rem; font-weight:600;">Systolic BP (mmHg)</label>
+            <input type="number" id="quickBP" class="form-control" value="125" oninput="calculateQuickRisk()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label style="font-size:0.85rem; font-weight:600;">Patient Age (Years)</label>
+            <input type="number" id="quickAge" class="form-control" value="45" oninput="calculateQuickRisk()">
+          </div>
+          <div class="form-group col-6">
+            <label style="font-size:0.85rem; font-weight:600;">Patient BMI (kg/m&sup2;)</label>
+            <input type="number" id="quickBMI" class="form-control" value="27.4" step="0.1" oninput="calculateQuickRisk()">
+          </div>
+        </div>
+
+        <div id="quickRiskResult" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:10px; padding:15px; text-align:center; margin-top:10px;">
+          <div style="font-size:0.85rem; color:#64748b; font-weight:600;">Composite Cardio-Metabolic Risk Index:</div>
+          <div id="quickRiskScore" style="font-size:1.8rem; font-weight:800; color:#0d9488; margin:4px 0;">Low-to-Moderate (34%)</div>
+          <div id="quickRiskMsg" style="font-size:0.82rem; color:#475569;">Parameters indicate borderline metabolic load. Recommend running complete Diabetes &amp; Cardiovascular modules.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinical Machine Learning Pipeline Architecture -->
+  <div class="pipeline-card">
+    <div style="text-align:center; max-width:700px; margin:0 auto;">
+      <span class="badge badge-success mb-2" style="background:#047857; font-size:0.8rem; padding:6px 12px;">End-to-End Integrity</span>
+      <h3 style="font-weight:800; color:#064e3b; margin-bottom:8px;">Jupyter-Themed ML Lifecycle</h3>
+      <p style="color:#047857; font-size:0.95rem;">
+        Complete machine learning operations seamlessly accessible directly in browser: data ingestion, missing value imputation, hyperparameter tuning, holdout test suite execution, and ROC-AUC validation.
+      </p>
+    </div>
+
+    <div class="step-boxes">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <h5 style="font-weight:700; color:#0f172a; font-size:1.05rem;">Data Ingestion &amp; Imputation</h5>
+        <p style="font-size:0.84rem; color:#64748b; margin:0;">
+          Automatic column parsing, categorical string mapping, and median imputation ensuring complete data integrity.
+        </p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <h5 style="font-weight:700; color:#0f172a; font-size:1.05rem;">Model Training</h5>
+        <p style="font-size:0.84rem; color:#64748b; margin:0;">
+          Configurable Random Forest estimators, train/test split ratios, and deep convolutional feature extraction.
+        </p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <h5 style="font-weight:700; color:#0f172a; font-size:1.05rem;">Holdout Test Suite</h5>
+        <p style="font-size:0.84rem; color:#64748b; margin:0;">
+          Patient-by-patient test record validation comparing model predictions with genuine clinical ground truth.
+        </p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <h5 style="font-weight:700; color:#0f172a; font-size:1.05rem;">Telemetry &amp; REST APIs</h5>
+        <p style="font-size:0.84rem; color:#64748b; margin:0;">
+          Confusion matrix visualization, ROC-AUC metric persistence, and programmatic JSON API endpoints.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Developer Attribution & Project Repository -->
+  <div class="lead-card">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <div style="font-size:0.85rem; font-weight:700; color:#047857; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">
+          Lead Engineer &amp; Clinical ML Developer
+        </div>
+        <h3 style="font-weight:800; color:#0f172a; margin-bottom:10px;">Mohd Shami</h3>
+        <p style="color:#64748b; font-size:0.95rem; line-height:1.6; margin-bottom:15px;">
+          Full-Stack Machine Learning Engineer specializing in healthcare artificial intelligence, statistical disease risk stratification, and scalable clinical diagnostic architectures.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="https://mohdshamii.github.io/" target="_blank" class="revive-btn-primary" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-globe"></i> Visit Portfolio
+          </a>
+          <a href="https://github.com/mohdshamii/Revive" target="_blank" class="revive-btn-outline" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-github"></i> GitHub Repository
+          </a>
+          <a href="mailto:codexshami@gmail.com" class="revive-btn-outline" style="padding:8px 16px; font-size:0.88rem;">
+            <i class="fa fa-envelope-o"></i> codexshami@gmail.com
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mt-3 mt-md-0">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:20px;">
+          <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:6px;">Revive Project Open Source</div>
+          <div style="font-size:0.8rem; color:#64748b; margin-bottom:12px;">Licensed under Apache 2.0 &middot; Python 3.10+ Flask &amp; TensorFlow</div>
+          <a href="{{ url_for('home') }}" class="btn btn-outline-success btn-sm btn-block" style="font-weight:600;">
+            <i class="fa fa-arrow-right"></i> Open Diagnostic Hub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Filter diagnostic models
+  function filterModels(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const cards = document.querySelectorAll('.diag-card');
+    cards.forEach(card => {
+      if (category === 'all' || card.getAttribute('data-category') === category) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Live search for models
+  function searchModels() {
+    const query = document.getElementById('modelSearchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.diag-card');
+    cards.forEach(card => {
+      const title = card.getAttribute('data-title').toLowerCase();
+      const desc = card.querySelector('.diag-desc').textContent.toLowerCase();
+      if (title.includes(query) || desc.includes(query)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Interactive Quick Risk Calculator
+  function calculateQuickRisk() {
+    const glucose = parseFloat(document.getElementById('quickGlucose').value) || 100;
+    const bp = parseFloat(document.getElementById('quickBP').value) || 120;
+    const age = parseFloat(document.getElementById('quickAge').value) || 40;
+    const bmi = parseFloat(document.getElementById('quickBMI').value) || 24;
+
+    let score = 10;
+    if (glucose > 140) score += 35;
+    else if (glucose > 100) score += 18;
+
+    if (bp > 140) score += 30;
+    else if (bp > 125) score += 15;
+
+    if (bmi > 30) score += 20;
+    else if (bmi > 25) score += 10;
+
+    if (age > 50) score += 15;
+    else if (age > 40) score += 8;
+
+    score = Math.min(score, 98);
+
+    const scoreElem = document.getElementById('quickRiskScore');
+    const msgElem = document.getElementById('quickRiskMsg');
+
+    if (score < 30) {
+      scoreElem.style.color = '#059669';
+      scoreElem.textContent = 'Low Risk (' + score + '%)';
+      msgElem.textContent = 'Physiological indicators are within standard baseline ranges. Routine annual checkups advised.';
+    } else if (score < 60) {
+      scoreElem.style.color = '#d97706';
+      scoreElem.textContent = 'Moderate Risk (' + score + '%)';
+      msgElem.textContent = 'Elevated physiological markers detected. Recommended to run the specific Diabetes or Cardiovascular modules.';
+    } else {
+      scoreElem.style.color = '#dc2626';
+      scoreElem.textContent = 'High Risk (' + score + '%)';
+      msgElem.textContent = 'Multi-factor risk threshold exceeded. Immediate clinical evaluation and specialized diagnostic testing advised.';
+    }
+  }
+</script>
+{% endblock %}

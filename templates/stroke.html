@@ -1,0 +1,296 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    /* --- THEME VARIABLES --- */
+    :root {
+        --primary-emerald: #047857;
+        --secondary-teal: #0d9488;
+        --accent-neon: #39ff14;
+        --bg-gradient-start: #ecfdf5;
+        --bg-gradient-end: #f0f9ff;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-dark);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .predictor-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        border-top: 5px solid var(--primary-emerald);
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .form-header {
+        background: var(--primary-emerald);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .form-header h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .form-header p {
+        margin-top: 10px;
+        opacity: 0.9;
+        font-size: 0.95rem;
+    }
+
+    .form-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.88rem;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background-color: white;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+        outline: none;
+        border-color: var(--secondary-teal);
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+    }
+
+    .form-group small {
+        display: block;
+        margin-top: 5px;
+        color: var(--text-light);
+        font-size: 0.75rem;
+        font-style: italic;
+    }
+
+    .btn-predict {
+        width: 100%;
+        padding: 15px;
+        background: var(--primary-emerald);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(4, 120, 87, 0.2);
+    }
+
+    .btn-predict:hover {
+        background: var(--secondary-teal);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(13, 148, 136, 0.3);
+    }
+
+    .section-header {
+        background: var(--secondary-teal);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin: 20px 0 15px 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .alert-danger {
+        background-color: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="container" style="max-width: 1050px; margin-top: 25px;">
+    <!-- Sub-Navbar matching /models -->
+    <div style="background: linear-gradient(90deg, var(--primary-emerald), var(--secondary-teal)); padding: 12px 20px; margin-bottom: 25px; border-radius: 10px; box-shadow: var(--card-shadow);">
+        <ul style="list-style: none; display: flex; justify-content: center; align-items: center; gap: 25px; margin: 0; padding: 0; flex-wrap: wrap;">
+            <li><a href="{{ url_for('home') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-th-large"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('training_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-play"></i> Model Training</a></li>
+            <li><a href="{{ url_for('testing_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-check-circle"></i> Test Suite</a></li>
+            <li><a href="{{ url_for('evaluation_page') }}" style="color: white; font-weight: 600; text-decoration: none;"><i class="fa fa-bar-chart"></i> Evaluation</a></li>
+            <li><a href="{{ url_for('services') }}" style="color: white; font-weight: 600; text-decoration: none;">Services</a></li>
+            <li><a href="{{ url_for('about_us') }}" style="color: white; font-weight: 600; text-decoration: none;">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}" style="color: white; font-weight: 600; text-decoration: none;">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="predictor-container">
+        <div class="form-header">
+            <h1 class="d-flex align-items-center justify-content-center">
+                <i class="fa fa-bolt mr-2 text-warning"></i> Brain Stroke Risk Predictor
+            </h1>
+            <p>Predict stroke risk based on clinical biomarkers and lifestyle demographics</p>
+        </div>
+
+    <div class="form-body">
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form action="{{ url_for('predictPage') }}" method="POST">
+            <input type="hidden" name="disease_type" value="stroke">
+
+            <!-- DEMOGRAPHIC DETAILS -->
+            <div class="section-header">Demographic Information</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="age">Age (years)</label>
+                        <input type="number" step="any" min="1" max="115" name="age" id="age" placeholder="e.g. 58" required>
+                        <small>Patient age in years</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select name="gender" id="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <small>Biological sex</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ever_married">Ever Married</label>
+                        <select name="ever_married" id="ever_married" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <small>Marital status</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEDICAL COMORBIDITIES -->
+            <div class="section-header">Medical Comorbidities</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="hypertension">Hypertension (High Blood Pressure)</label>
+                        <select name="hypertension" id="hypertension" required>
+                            <option value="0">No (Normal Blood Pressure)</option>
+                            <option value="1">Yes (Diagnosed Hypertension)</option>
+                        </select>
+                        <small>History of high blood pressure</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="heart_disease">Heart Disease History</label>
+                        <select name="heart_disease" id="heart_disease" required>
+                            <option value="0">No Heart Condition</option>
+                            <option value="1">Yes (Pre-existing Heart Disease)</option>
+                        </select>
+                        <small>Any prior cardiovascular condition</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLINICAL MEASUREMENTS -->
+            <div class="section-header">Clinical Biomarkers</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="avg_glucose_level">Average Glucose Level (mg/dL)</label>
+                        <input type="number" step="any" min="40" max="350" name="avg_glucose_level" id="avg_glucose_level" placeholder="e.g. 106.14" required>
+                        <small>Blood serum glucose concentration</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="bmi">Body Mass Index (BMI)</label>
+                        <input type="number" step="any" min="10" max="70" name="bmi" id="bmi" placeholder="e.g. 28.5" required>
+                        <small>Body mass index (weight/height²)</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIFESTYLE & ENVIRONMENT -->
+            <div class="section-header">Lifestyle & Environment</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="work_type">Work / Employment Type</label>
+                        <select name="work_type" id="work_type" required>
+                            <option value="Private">Private Sector</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Govt_job">Government Job</option>
+                            <option value="children">Children / Student</option>
+                            <option value="Never_worked">Never Worked</option>
+                        </select>
+                        <small>Current primary employment sector</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Residence_type">Residence Environment</label>
+                        <select name="Residence_type" id="Residence_type" required>
+                            <option value="Urban">Urban Area</option>
+                            <option value="Rural">Rural Area</option>
+                        </select>
+                        <small>Living locality</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="smoking_status">Smoking Status</label>
+                        <select name="smoking_status" id="smoking_status" required>
+                            <option value="never smoked">Never Smoked</option>
+                            <option value="formerly smoked">Formerly Smoked</option>
+                            <option value="smokes">Currently Smokes</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                        <small>Tobacco smoking history</small>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" class="btn-predict" value="Predict Stroke Risk">
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

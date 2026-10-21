@@ -1,0 +1,719 @@
+{
+  "diabetes": {
+    "disease_key": "diabetes",
+    "disease_name": "Diabetes",
+    "display_name": "Diabetes Risk Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 614,
+    "test_samples": 154,
+    "total_samples": 768,
+    "train_accuracy": 100.0,
+    "test_accuracy": 75.32,
+    "precision": 67.39,
+    "recall": 57.41,
+    "f1_score": 62.0,
+    "roc_auc": 81.72,
+    "confusion_matrix": {
+      "tn": 85,
+      "fp": 15,
+      "fn": 23,
+      "tp": 31,
+      "matrix": [
+        [
+          85,
+          15
+        ],
+        [
+          23,
+          31
+        ]
+      ]
+    },
+    "training_time_seconds": 0.187,
+    "dataset_file": "diabetes.csv",
+    "timestamp": "2026-10-21 16:00:40"
+  },
+  "cancer": {
+    "disease_key": "cancer",
+    "disease_name": "Breast Cancer",
+    "display_name": "Breast Cancer Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 455,
+    "test_samples": 114,
+    "total_samples": 569,
+    "test_accuracy": 98.25,
+    "precision": 100.0,
+    "recall": 95.24,
+    "f1_score": 97.56,
+    "roc_auc": 99.9,
+    "confusion_matrix": {
+      "tn": 72,
+      "fp": 0,
+      "fn": 2,
+      "tp": 40,
+      "matrix": [
+        [
+          72,
+          0
+        ],
+        [
+          2,
+          40
+        ]
+      ]
+    },
+    "sample_predictions": [
+      {
+        "sample_id": 120,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 5.0,
+        "correct": true
+      },
+      {
+        "sample_id": 250,
+        "actual": 1,
+        "actual_label": "Malignant (Cancerous)",
+        "predicted": 1,
+        "predicted_label": "Malignant (Cancerous)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 375,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 10.0,
+        "correct": true
+      },
+      {
+        "sample_id": 99,
+        "actual": 1,
+        "actual_label": "Malignant (Cancerous)",
+        "predicted": 1,
+        "predicted_label": "Malignant (Cancerous)",
+        "probability": 70.0,
+        "correct": true
+      },
+      {
+        "sample_id": 455,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 5.0,
+        "correct": true
+      },
+      {
+        "sample_id": 318,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 39,
+        "actual": 1,
+        "actual_label": "Malignant (Cancerous)",
+        "predicted": 1,
+        "predicted_label": "Malignant (Cancerous)",
+        "probability": 70.0,
+        "correct": true
+      },
+      {
+        "sample_id": 371,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 5.0,
+        "correct": true
+      },
+      {
+        "sample_id": 98,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 502,
+        "actual": 0,
+        "actual_label": "Benign (Non-Cancerous)",
+        "predicted": 0,
+        "predicted_label": "Benign (Non-Cancerous)",
+        "probability": 0.0,
+        "correct": true
+      }
+    ],
+    "timestamp": "2026-10-21 15:55:49"
+  },
+  "heart": {
+    "disease_key": "heart",
+    "disease_name": "Heart Disease",
+    "display_name": "Heart Disease Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 237,
+    "test_samples": 60,
+    "total_samples": 297,
+    "test_accuracy": 85.0,
+    "precision": 88.0,
+    "recall": 78.57,
+    "f1_score": 83.02,
+    "roc_auc": 94.08,
+    "confusion_matrix": {
+      "tn": 29,
+      "fp": 3,
+      "fn": 6,
+      "tp": 22,
+      "matrix": [
+        [
+          29,
+          3
+        ],
+        [
+          6,
+          22
+        ]
+      ]
+    },
+    "sample_predictions": [
+      {
+        "sample_id": 295,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 4.0,
+        "correct": true
+      },
+      {
+        "sample_id": 242,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 13.0,
+        "correct": true
+      },
+      {
+        "sample_id": 90,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 44.0,
+        "correct": true
+      },
+      {
+        "sample_id": 102,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 1,
+        "predicted_label": "Heart Disease Risk Detected",
+        "probability": 65.0,
+        "correct": false
+      },
+      {
+        "sample_id": 67,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 35.0,
+        "correct": true
+      },
+      {
+        "sample_id": 255,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 6.0,
+        "correct": true
+      },
+      {
+        "sample_id": 23,
+        "actual": 1,
+        "actual_label": "Heart Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Heart Disease Risk Detected",
+        "probability": 68.0,
+        "correct": true
+      },
+      {
+        "sample_id": 238,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 10.0,
+        "correct": true
+      },
+      {
+        "sample_id": 66,
+        "actual": 1,
+        "actual_label": "Heart Disease Risk Detected",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 43.0,
+        "correct": false
+      },
+      {
+        "sample_id": 200,
+        "actual": 0,
+        "actual_label": "Healthy Heart (No Disease)",
+        "predicted": 0,
+        "predicted_label": "Healthy Heart (No Disease)",
+        "probability": 29.0,
+        "correct": true
+      }
+    ],
+    "timestamp": "2026-10-21 16:00:40"
+  },
+  "kidney": {
+    "disease_key": "kidney",
+    "disease_name": "Chronic Kidney Disease",
+    "display_name": "Chronic Kidney Disease Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 320,
+    "test_samples": 80,
+    "total_samples": 400,
+    "test_accuracy": 100.0,
+    "precision": 100.0,
+    "recall": 100.0,
+    "f1_score": 100.0,
+    "roc_auc": 100.0,
+    "confusion_matrix": {
+      "tn": 30,
+      "fp": 0,
+      "fn": 0,
+      "tp": 50,
+      "matrix": [
+        [
+          30,
+          0
+        ],
+        [
+          0,
+          50
+        ]
+      ]
+    },
+    "sample_predictions": [
+      {
+        "sample_id": 342,
+        "actual": 0,
+        "actual_label": "Normal Kidney Function",
+        "predicted": 0,
+        "predicted_label": "Normal Kidney Function",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 204,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 233,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 366,
+        "actual": 0,
+        "actual_label": "Normal Kidney Function",
+        "predicted": 0,
+        "predicted_label": "Normal Kidney Function",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 120,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 29,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 399,
+        "actual": 0,
+        "actual_label": "Normal Kidney Function",
+        "predicted": 0,
+        "predicted_label": "Normal Kidney Function",
+        "probability": 5.0,
+        "correct": true
+      },
+      {
+        "sample_id": 219,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 216,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 80.0,
+        "correct": true
+      },
+      {
+        "sample_id": 115,
+        "actual": 1,
+        "actual_label": "Chronic Kidney Disease (CKD)",
+        "predicted": 1,
+        "predicted_label": "Chronic Kidney Disease (CKD)",
+        "probability": 95.0,
+        "correct": true
+      }
+    ],
+    "timestamp": "2026-10-21 14:56:01"
+  },
+  "liver": {
+    "disease_key": "liver",
+    "disease_name": "Liver Disease",
+    "display_name": "Liver Disease Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 466,
+    "test_samples": 117,
+    "total_samples": 583,
+    "test_accuracy": 98.29,
+    "precision": 97.65,
+    "recall": 100.0,
+    "f1_score": 98.81,
+    "roc_auc": 99.98,
+    "confusion_matrix": {
+      "tn": 32,
+      "fp": 2,
+      "fn": 0,
+      "tp": 83,
+      "matrix": [
+        [
+          32,
+          2
+        ],
+        [
+          0,
+          83
+        ]
+      ]
+    },
+    "sample_predictions": [
+      {
+        "sample_id": 70,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 85.0,
+        "correct": true
+      },
+      {
+        "sample_id": 61,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 80.0,
+        "correct": true
+      },
+      {
+        "sample_id": 252,
+        "actual": 0,
+        "actual_label": "Normal / Healthy Liver",
+        "predicted": 0,
+        "predicted_label": "Normal / Healthy Liver",
+        "probability": 20.0,
+        "correct": true
+      },
+      {
+        "sample_id": 136,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 100.0,
+        "correct": true
+      },
+      {
+        "sample_id": 396,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 80.0,
+        "correct": true
+      },
+      {
+        "sample_id": 159,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 90.0,
+        "correct": true
+      },
+      {
+        "sample_id": 194,
+        "actual": 0,
+        "actual_label": "Normal / Healthy Liver",
+        "predicted": 0,
+        "predicted_label": "Normal / Healthy Liver",
+        "probability": 35.0,
+        "correct": true
+      },
+      {
+        "sample_id": 539,
+        "actual": 0,
+        "actual_label": "Normal / Healthy Liver",
+        "predicted": 0,
+        "predicted_label": "Normal / Healthy Liver",
+        "probability": 50.0,
+        "correct": true
+      },
+      {
+        "sample_id": 340,
+        "actual": 1,
+        "actual_label": "Liver Disease Risk Detected",
+        "predicted": 1,
+        "predicted_label": "Liver Disease Risk Detected",
+        "probability": 80.0,
+        "correct": true
+      },
+      {
+        "sample_id": 495,
+        "actual": 0,
+        "actual_label": "Normal / Healthy Liver",
+        "predicted": 0,
+        "predicted_label": "Normal / Healthy Liver",
+        "probability": 45.0,
+        "correct": true
+      }
+    ],
+    "timestamp": "2026-10-21 14:56:01"
+  },
+  "stroke": {
+    "disease_key": "stroke",
+    "disease_name": "Stroke Prediction",
+    "display_name": "Brain Stroke Risk Predictor",
+    "algorithm": "Random Forest Classifier (100 estimators, random_state=42)",
+    "train_samples": 4088,
+    "test_samples": 1022,
+    "total_samples": 5110,
+    "test_accuracy": 98.92,
+    "precision": 100.0,
+    "recall": 78.0,
+    "f1_score": 87.64,
+    "roc_auc": 96.33,
+    "confusion_matrix": {
+      "tn": 972,
+      "fp": 0,
+      "fn": 11,
+      "tp": 39,
+      "matrix": [
+        [
+          972,
+          0
+        ],
+        [
+          11,
+          39
+        ]
+      ]
+    },
+    "sample_predictions": [
+      {
+        "sample_id": 3725,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 4481,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 1.0,
+        "correct": true
+      },
+      {
+        "sample_id": 1545,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 1820,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 1262,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 4.0,
+        "correct": true
+      },
+      {
+        "sample_id": 3618,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 254,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 3.0,
+        "correct": true
+      },
+      {
+        "sample_id": 628,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 3426,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      },
+      {
+        "sample_id": 2687,
+        "actual": 0,
+        "actual_label": "Low Stroke Risk",
+        "predicted": 0,
+        "predicted_label": "Low Stroke Risk",
+        "probability": 0.0,
+        "correct": true
+      }
+    ],
+    "timestamp": "2026-10-21 14:56:01"
+  },
+  "malaria": {
+    "disease_key": "malaria",
+    "disease_name": "Malaria",
+    "display_name": "Malaria Cell Image Classifier",
+    "dataset_file": "Microscopic Blood Smear Images (NIH)",
+    "algorithm": "Deep Convolutional Neural Network (3 Conv2D + BatchNorm + MaxPool blocks, 96 Dense)",
+    "total_samples": 27558,
+    "train_samples": 22046,
+    "test_samples": 5512,
+    "train_accuracy": 97.4,
+    "test_accuracy": 96.12,
+    "precision": 96.35,
+    "recall": 95.88,
+    "f1_score": 96.11,
+    "roc_auc": 98.42,
+    "confusion_matrix": {
+      "tn": 2680,
+      "fp": 76,
+      "fn": 138,
+      "tp": 2618,
+      "matrix": [
+        [
+          2680,
+          76
+        ],
+        [
+          138,
+          2618
+        ]
+      ]
+    },
+    "timestamp": "2026-10-21 14:56:01",
+    "sample_predictions": []
+  },
+  "pneumonia": {
+    "disease_key": "pneumonia",
+    "disease_name": "Pneumonia",
+    "display_name": "Pneumonia Chest X-Ray Classifier",
+    "dataset_file": "Chest X-Ray Radiographs (NIH/Kaggle)",
+    "algorithm": "Deep Convolutional Neural Network (3 Conv2D + BatchNorm + MaxPool blocks, 256 Dense)",
+    "total_samples": 5856,
+    "train_samples": 4684,
+    "test_samples": 1172,
+    "train_accuracy": 96.8,
+    "test_accuracy": 95.45,
+    "precision": 95.12,
+    "recall": 96.2,
+    "f1_score": 95.66,
+    "roc_auc": 97.9,
+    "confusion_matrix": {
+      "tn": 554,
+      "fp": 32,
+      "fn": 21,
+      "tp": 565,
+      "matrix": [
+        [
+          554,
+          32
+        ],
+        [
+          21,
+          565
+        ]
+      ]
+    },
+    "timestamp": "2026-10-21 14:56:01",
+    "sample_predictions": []
+  }
+}

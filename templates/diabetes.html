@@ -1,227 +1,288 @@
 {% extends 'main.html' %}
 {% block content %}
 <style>
-    /* --- THEME VARIABLES --- */
     :root {
-        --primary-emerald: #047857;       /* Emerald Green */
-        --secondary-teal: #0d9488;        /* Teal Blue */
-        --accent-neon: #39ff14;           /* Neon Green */
-        --bg-gradient-start: #ecfdf5;     /* Light Emerald */
-        --bg-gradient-end: #f0f9ff;       /* Light Teal */
+        --primary-emerald: #047857;
+        --secondary-teal: #0d9488;
+        --accent-neon: #10b981;
+        --bg-light: #f0fdf4;
         --text-dark: #1f2937;
         --text-light: #6b7280;
-        --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
-    /* --- GLOBAL STYLES --- */
     body {
-        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+        background: linear-gradient(135deg, #ecfdf5 0%, #f0f9ff 100%);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: var(--text-dark);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
+        padding-bottom: 50px;
     }
 
-    /* --- CONTAINER STYLES --- */
-    .predictor-container {
-        width: 100%;
-        max-width: 600px;
+    .container {
+        max-width: 1000px;
+        margin-top: 30px;
+    }
+
+    /* Sub-Navbar */
+    .sub-navbar {
+        background: linear-gradient(90deg, var(--primary-emerald), var(--secondary-teal));
+        padding: 12px 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+    }
+
+    .sub-nav-links {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+
+    .sub-nav-links li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .sub-nav-links li a:hover {
+        background: rgba(255,255,255,0.15);
+        color: #a7f3d0;
+        transform: translateY(-2px);
+    }
+
+    /* Card Box */
+    .predictor-card {
         background: white;
         border-radius: 16px;
         box-shadow: var(--card-shadow);
-        overflow: hidden;
+        border: 1px solid #e5e7eb;
         border-top: 5px solid var(--primary-emerald);
-        animation: fadeIn 0.8s ease-out;
+        overflow: hidden;
+        margin-bottom: 30px;
     }
 
-    /* --- HEADER --- */
-    .form-header {
-        background: var(--primary-emerald);
-        color: white;
-        padding: 30px;
+    .predictor-header {
+        background: white;
+        padding: 30px 35px 20px;
+        border-bottom: 1px solid #f1f5f9;
         text-align: center;
     }
 
-    .form-header h1 {
+    .predictor-header h2 {
+        color: var(--primary-emerald);
+        font-weight: 800;
+        margin: 0 0 8px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .predictor-header p {
+        color: var(--text-light);
         margin: 0;
-        font-size: 2rem;
+        font-size: 1rem;
+    }
+
+    .predictor-body {
+        padding: 35px;
+    }
+
+    .section-title {
+        color: var(--secondary-teal);
+        font-size: 1.1rem;
         font-weight: 700;
-        letter-spacing: 1px;
-    }
-
-    .form-header p {
-        margin-top: 10px;
-        opacity: 0.9;
-        font-size: 0.95rem;
-    }
-
-    /* --- FORM STYLES --- */
-    .form-body {
-        padding: 30px;
-    }
-
-    .form-group {
+        border-bottom: 2px solid var(--bg-light);
+        padding-bottom: 8px;
         margin-bottom: 20px;
-        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .form-group label {
-        display: block;
-        margin-bottom: 8px;
         font-weight: 600;
         color: var(--text-dark);
         font-size: 0.9rem;
+        margin-bottom: 6px;
+        display: block;
     }
 
     .form-group input {
         width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #e5e7eb;
+        padding: 10px 14px;
+        border: 1px solid #cbd5e1;
         border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-sizing: border-box; /* Ensures padding doesn't affect width */
+        background: #f8fafc;
+        font-size: 0.95rem;
+        transition: all 0.2s;
     }
 
     .form-group input:focus {
+        border-color: var(--primary-emerald);
         outline: none;
-        border-color: var(--secondary-teal);
-        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
-    }
-
-    .form-group input::placeholder {
-        color: #9ca3af;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
     }
 
     .form-group small {
-        display: block;
-        margin-top: 5px;
         color: var(--text-light);
         font-size: 0.8rem;
-        font-style: italic;
+        display: block;
+        margin-top: 4px;
     }
 
-    /* --- BUTTON STYLES --- */
     .btn-predict {
-        width: 100%;
-        padding: 15px;
-        background: var(--primary-emerald);
+        background: linear-gradient(90deg, var(--primary-emerald), var(--secondary-teal));
         color: white;
         border: none;
+        padding: 14px 28px;
+        font-size: 1.05rem;
+        font-weight: 700;
         border-radius: 8px;
-        font-size: 1.1rem;
-        font-weight: 600;
         cursor: pointer;
+        width: 100%;
         transition: all 0.3s ease;
-        margin-top: 10px;
         box-shadow: 0 4px 6px rgba(4, 120, 87, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
 
     .btn-predict:hover {
-        background: var(--secondary-teal);
+        opacity: 0.95;
         transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(13, 148, 136, 0.3);
-    }
-
-    .btn-predict:active {
-        transform: translateY(0);
-    }
-
-    /* --- ALERT STYLES --- */
-    .alert-danger {
-        background-color: #fee2e2;
-        border: 1px solid #fca5a5;
-        color: #991b1b;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    /* --- ANIMATION --- */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- RESPONSIVE --- */
-    @media (max-width: 768px) {
-        .predictor-container {
-            margin: 10px;
-        }
-        .form-header h1 {
-            font-size: 1.5rem;
-        }
+        box-shadow: 0 8px 15px rgba(4, 120, 87, 0.25);
+        color: white;
     }
 </style>
 
-{% if message %}
-    <div class="alert alert-danger">{{ message }}</div>
-{% endif %}
-
-<div class="predictor-container">
-    <div class="form-header">
-        <h1>Diabetes Predictor</h1>
-        <p>Enter your health metrics to get an AI-based prediction</p>
+<div class="container">
+    <!-- Sub-Navbar matching /models -->
+    <div class="sub-navbar">
+        <ul class="sub-nav-links">
+            <li><a href="{{ url_for('home') }}"><i class="fa fa-th-large"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('training_page') }}"><i class="fa fa-play"></i> Model Training</a></li>
+            <li><a href="{{ url_for('testing_page') }}"><i class="fa fa-check-circle"></i> Test Suite</a></li>
+            <li><a href="{{ url_for('evaluation_page') }}"><i class="fa fa-bar-chart"></i> Evaluation</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
     </div>
-    
-    <div class="form-body">
-        <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
-            
-            <div class="form-group">
-                <label for="pregnancies">Number of Pregnancies</label>
-                <input type="text" name="pregnancies" id="pregnancies" placeholder="e.g. 0" required>
-                <small>Number of times pregnant</small>
-            </div>
 
-            <div class="form-group">
-                <label for="glucose">Glucose Level (mg/dL)</label>
-                <input type="text" name="glucose" id="glucose" placeholder="e.g. 80" required>
-                <small>Plasma glucose concentration 2 hours in an oral glucose tolerance test</small>
-            </div>
+    {% if message %}
+        <div class="alert alert-danger" style="border-radius:8px;">{{ message }}</div>
+    {% endif %}
 
-            <div class="form-group">
-                <label for="bloodpressure">Blood Pressure (mmHg)</label>
-                <input type="text" name="bloodpressure" id="bloodpressure" placeholder="e.g. 80" required>
-                <small>Diastolic blood pressure (mm Hg)</small>
-            </div>
+    <div class="predictor-card">
+        <div class="predictor-header">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+                Diabetes Mellitus Risk Predictor
+            </h2>
+            <p>Pima Indians clinical diabetes database trained on physiological diagnostic indicators</p>
+        </div>
 
-            <div class="form-group">
-                <label for="skinthickness">Skin Thickness (mm)</label>
-                <input type="text" name="skinthickness" id="skinthickness" placeholder="e.g. 20" required>
-                <small>Triceps skin fold thickness (mm)</small>
-            </div>
+        <div class="predictor-body">
+            <form action="{{ url_for('predictPage') }}" method="POST">
+                <input type="hidden" name="disease_type" value="diabetes">
 
-            <div class="form-group">
-                <label for="insulin">Insulin Level (IU/mL)</label>
-                <input type="text" name="insulin" id="insulin" placeholder="e.g. 80" required>
-                <small>2-Hour serum insulin (mu U/ml)</small>
-            </div>
+                <div class="section-title">
+                    <i class="fa fa-heartbeat"></i> Clinical Biomarkers & Glucose Metrics
+                </div>
 
-            <div class="form-group">
-                <label for="bmi">Body Mass Index (kg/m²)</label>
-                <input type="text" name="bmi" id="bmi" placeholder="e.g. 23.1" required>
-                <small>Body mass index (weight in kg/(height in m)^2)</small>
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="glucose">Plasma Glucose Concentration (mg/dL)</label>
+                            <input type="number" step="any" min="0" max="400" name="glucose" id="glucose" placeholder="e.g. 120" required>
+                            <small>2-hour oral glucose tolerance test concentration</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="insulin">2-Hour Serum Insulin (IU/mL)</label>
+                            <input type="number" step="any" min="0" max="900" name="insulin" id="insulin" placeholder="e.g. 85" required>
+                            <small>Normal fasting insulin range is 16-166 IU/mL</small>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="dpf">Diabetes Pedigree Function</label>
-                <input type="text" name="dpf" id="dpf" placeholder="e.g. 0.52" required>
-                <small>Diabetes pedigree function</small>
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bloodpressure">Diastolic Blood Pressure (mmHg)</label>
+                            <input type="number" step="any" min="0" max="220" name="bloodpressure" id="bloodpressure" placeholder="e.g. 70" required>
+                            <small>Diastolic measurement in millimeters of mercury</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bmi">Body Mass Index (BMI in kg/m²)</label>
+                            <input type="number" step="any" min="10" max="75" name="bmi" id="bmi" placeholder="e.g. 28.5" required>
+                            <small>Weight in kilograms divided by height squared</small>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="age">Age (years)</label>
-                <input type="text" name="age" id="age" placeholder="e.g. 34" required>
-                <small>Age (years)</small>
-            </div>
+                <div class="section-title mt-4">
+                    <i class="fa fa-user-md"></i> Demographics & Physiological Factors
+                </div>
 
-            <input type="submit" class="btn-predict" value="Predict Risk">
-            
-        </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="pregnancies">Number of Pregnancies</label>
+                            <input type="number" min="0" max="25" name="pregnancies" id="pregnancies" placeholder="e.g. 2" required>
+                            <small>Total prior gestations (enter 0 for males or no prior pregnancy)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="skinthickness">Triceps Skin Fold Thickness (mm)</label>
+                            <input type="number" step="any" min="0" max="110" name="skinthickness" id="skinthickness" placeholder="e.g. 25" required>
+                            <small>Triceps skinfold measurement in millimeters</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="diabetespedigreefunction">Diabetes Pedigree Function (DPF)</label>
+                            <input type="number" step="any" min="0" max="3" name="diabetespedigreefunction" id="diabetespedigreefunction" placeholder="e.g. 0.45" required>
+                            <small>Genetic score based on family diabetes history</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="age">Patient Age (Years)</label>
+                            <input type="number" min="1" max="120" name="age" id="age" placeholder="e.g. 45" required>
+                            <small>Age of patient in years</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn-predict">
+                        <i class="fa fa-check-circle"></i> Run Diagnostic Prediction
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
